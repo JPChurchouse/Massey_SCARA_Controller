@@ -1,4 +1,4 @@
-﻿using SCARA_GUI.Properties;
+﻿using Massey_SCARA_Controller.Properties;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace SCARA_GUI
+namespace Massey_SCARA_Controller
 {
     public partial class MainWindow : Window
     {

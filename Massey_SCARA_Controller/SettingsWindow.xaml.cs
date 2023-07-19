@@ -1,8 +1,8 @@
-﻿using SCARA_GUI.Properties;
+﻿using Massey_SCARA_Controller.Properties;
 using System;
 using System.Windows;
 
-namespace SCARA_GUI
+namespace Massey_SCARA_Controller
 {
   /// <summary>
   /// Interaction logic for SettingsWindow.xaml

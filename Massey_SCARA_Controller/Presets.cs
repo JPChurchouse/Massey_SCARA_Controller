@@ -11,7 +11,7 @@ using
 // https://code-maze.com/introduction-system-text-json-examples/
 // https://code-maze.com/csharp-write-json-into-a-file/
 
-namespace SCARA_GUI
+namespace Massey_SCARA_Controller
 {
   public partial class MainWindow : Window
   {

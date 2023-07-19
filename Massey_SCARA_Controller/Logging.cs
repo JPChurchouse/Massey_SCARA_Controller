@@ -7,22 +7,21 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace SCARA_GUI
+namespace Massey_SCARA_Controller
 {
     public partial class MainWindow : Window
     {
-        private string file_Logging;
+        private string file_Logging = "";
         private void InitLog()
         {
             string timenow = DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss");
-            file_Logging = $"logs\\{timenow}_SCARA_GUI.log";
+            file_Logging = $"logs\\{timenow}_Massey_SCARA_Controller.log";
             Log.Logger = new LoggerConfiguration()
                 .MinimumLevel.Verbose()
                 .WriteTo.Console()
                 .WriteTo.File(file_Logging)
                 .CreateLogger();
-            Log.Information("This programme was developed by J. P. Churchouse");
-            Log.Information("Started programme at time: " + timenow);
+            Log.Information("This program was developed by J. P. Churchouse\r\n");
         }
 
         // Add a line of text to the outputs log

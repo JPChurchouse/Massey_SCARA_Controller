@@ -6,7 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace SCARA_GUI
+namespace Massey_SCARA_Controller
 {
     /// <summary>
     /// Interaction logic for App.xaml

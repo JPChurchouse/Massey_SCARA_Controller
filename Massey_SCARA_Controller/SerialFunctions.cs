@@ -8,9 +8,10 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Windows;
 using System.Management;
-using SCARA_GUI.Properties;
+using System.Windows.Media;
+using Massey_SCARA_Controller.Properties;
 
-namespace SCARA_GUI
+namespace Massey_SCARA_Controller
 {
   public partial class MainWindow : Window
   {
@@ -150,7 +151,14 @@ namespace SCARA_GUI
 
           foreach (var dev in devices)
           {
-            string caption = dev.GetPropertyValue("Caption").ToString();
+            string? caption;
+            try
+            {
+              caption = dev.GetPropertyValue("Caption").ToString();
+              if (caption == null) throw new Exception();
+            }
+            catch { continue; }
+            
             Log.Debug($"Found device: {caption}");
 
 
@@ -195,14 +203,12 @@ namespace SCARA_GUI
         if (port_SCARA_connected)
         {
           Log.Debug($"Baudrate: {SERIALPORT_SCARA.BaudRate}");
-
-          
           // Play alarm
-          WMPLib.WindowsMediaPlayer player = new WMPLib.WindowsMediaPlayer();
+          MediaPlayer player = new MediaPlayer();
           if (Settings.Default.alarm) 
           {
-            player.URL = "alarm.mp3";
-            player.controls.play();
+            player.Open(new Uri("alarm.mp3"));
+            player.Play();
           }
 
           // Show warning
@@ -211,7 +217,7 @@ namespace SCARA_GUI
             "The SCARA is about to become active. Press \"OK\" to proceed when the area is safe.",
             "⚠️ WARNING ⚠️");
 
-          player.close();
+          player.Close();
 
           // Home all axies
           PORT_SCARA_Send("ECHO,1");

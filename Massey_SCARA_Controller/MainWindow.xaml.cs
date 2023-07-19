@@ -1,8 +1,9 @@
 ﻿using Serilog;
 using System;
 using System.Windows;
+using Massey_SCARA_Controller.Properties;
 
-namespace SCARA_GUI
+namespace Massey_SCARA_Controller
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -18,7 +19,7 @@ namespace SCARA_GUI
             InitLog();
             InitSerial();
 
-            menu_Outputs_Alert.IsChecked        = Properties.Settings.Default.out_Alrt;
+            menu_Outputs_Alert.IsChecked        = Settings.Default.out_Alrt;
             menu_Outputs_Receive.IsChecked      = Settings.Default.out_Rx;
             menu_Outputs_Transmit.IsChecked     = Settings.Default.out_Tx;
             menu_Outputs_System.IsChecked       = Settings.Default.out_Sys;
@@ -160,29 +161,6 @@ namespace SCARA_GUI
             sld_MoveY.Value = Y;
         }
 
-    private void btn_NewScript_Click(object sender, RoutedEventArgs e)
-    {
-
-    }
-
-    private void btn_SelectScript_Click(object sender, RoutedEventArgs e)
-    {
-
-    }
-
-    private void btn_RunScript_Click(object sender, RoutedEventArgs e)
-    {
-
-    }
-
-    private void btn_RemovePose_Click(object sender, RoutedEventArgs e)
-    {
-
-    }
-
-    private void btn_DeleteScript_Click(object sender, RoutedEventArgs e)
-    {
-
-    }
+    
   }
 }

@@ -25,34 +25,10 @@ namespace Massey_SCARA_Controller.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string Setting {
-            get {
-                return ((string)(this["Setting"]));
-            }
-            set {
-                this["Setting"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string sdf {
-            get {
-                return ((string)(this["sdf"]));
-            }
-            set {
-                this["sdf"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public string out_Alrt {
+        public bool out_Alrt {
             get {
-                return ((string)(this["out_Alrt"]));
+                return ((bool)(this["out_Alrt"]));
             }
             set {
                 this["out_Alrt"] = value;
@@ -62,9 +38,9 @@ namespace Massey_SCARA_Controller.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public string out_Rx {
+        public bool out_Rx {
             get {
-                return ((string)(this["out_Rx"]));
+                return ((bool)(this["out_Rx"]));
             }
             set {
                 this["out_Rx"] = value;
@@ -74,9 +50,9 @@ namespace Massey_SCARA_Controller.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public string out_Tx {
+        public bool out_Tx {
             get {
-                return ((string)(this["out_Tx"]));
+                return ((bool)(this["out_Tx"]));
             }
             set {
                 this["out_Tx"] = value;
@@ -86,9 +62,9 @@ namespace Massey_SCARA_Controller.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public string out_Sys {
+        public bool out_Sys {
             get {
-                return ((string)(this["out_Sys"]));
+                return ((bool)(this["out_Sys"]));
             }
             set {
                 this["out_Sys"] = value;
@@ -146,9 +122,9 @@ namespace Massey_SCARA_Controller.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("1000")]
-        public string air_DELAY_P {
+        public int air_DELAY_P {
             get {
-                return ((string)(this["air_DELAY_P"]));
+                return ((int)(this["air_DELAY_P"]));
             }
             set {
                 this["air_DELAY_P"] = value;
@@ -158,9 +134,9 @@ namespace Massey_SCARA_Controller.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("500")]
-        public string air_DELAY_G {
+        public int air_DELAY_G {
             get {
-                return ((string)(this["air_DELAY_G"]));
+                return ((int)(this["air_DELAY_G"]));
             }
             set {
                 this["air_DELAY_G"] = value;
@@ -170,9 +146,9 @@ namespace Massey_SCARA_Controller.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("180")]
-        public string max_W {
+        public int max_W {
             get {
-                return ((string)(this["max_W"]));
+                return ((int)(this["max_W"]));
             }
             set {
                 this["max_W"] = value;
@@ -182,9 +158,9 @@ namespace Massey_SCARA_Controller.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("100")]
-        public string max_X {
+        public int max_X {
             get {
-                return ((string)(this["max_X"]));
+                return ((int)(this["max_X"]));
             }
             set {
                 this["max_X"] = value;
@@ -194,9 +170,9 @@ namespace Massey_SCARA_Controller.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("100")]
-        public string max_Y {
+        public int max_Y {
             get {
-                return ((string)(this["max_Y"]));
+                return ((int)(this["max_Y"]));
             }
             set {
                 this["max_Y"] = value;
@@ -206,9 +182,9 @@ namespace Massey_SCARA_Controller.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("-180")]
-        public string min_W {
+        public int min_W {
             get {
-                return ((string)(this["min_W"]));
+                return ((int)(this["min_W"]));
             }
             set {
                 this["min_W"] = value;
@@ -218,9 +194,9 @@ namespace Massey_SCARA_Controller.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("0")]
-        public string min_X {
+        public int min_X {
             get {
-                return ((string)(this["min_X"]));
+                return ((int)(this["min_X"]));
             }
             set {
                 this["min_X"] = value;
@@ -230,9 +206,9 @@ namespace Massey_SCARA_Controller.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("0")]
-        public string min_Y {
+        public int min_Y {
             get {
-                return ((string)(this["min_Y"]));
+                return ((int)(this["min_Y"]));
             }
             set {
                 this["min_Y"] = value;
@@ -242,9 +218,9 @@ namespace Massey_SCARA_Controller.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("450")]
-        public string window_Height {
+        public int window_Height {
             get {
-                return ((string)(this["window_Height"]));
+                return ((int)(this["window_Height"]));
             }
             set {
                 this["window_Height"] = value;
@@ -254,9 +230,9 @@ namespace Massey_SCARA_Controller.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("600")]
-        public string window_Width {
+        public int window_Width {
             get {
-                return ((string)(this["window_Width"]));
+                return ((int)(this["window_Width"]));
             }
             set {
                 this["window_Width"] = value;
@@ -266,9 +242,9 @@ namespace Massey_SCARA_Controller.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("115200")]
-        public string ser_Baud {
+        public int ser_Baud {
             get {
-                return ((string)(this["ser_Baud"]));
+                return ((int)(this["ser_Baud"]));
             }
             set {
                 this["ser_Baud"] = value;
@@ -278,9 +254,9 @@ namespace Massey_SCARA_Controller.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("500")]
-        public string ser_Tim {
+        public int ser_Tim {
             get {
-                return ((string)(this["ser_Tim"]));
+                return ((int)(this["ser_Tim"]));
             }
             set {
                 this["ser_Tim"] = value;
@@ -290,9 +266,9 @@ namespace Massey_SCARA_Controller.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("200")]
-        public string lockout {
+        public int lockout {
             get {
-                return ((string)(this["lockout"]));
+                return ((int)(this["lockout"]));
             }
             set {
                 this["lockout"] = value;
@@ -302,9 +278,9 @@ namespace Massey_SCARA_Controller.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public string alarm {
+        public bool alarm {
             get {
-                return ((string)(this["alarm"]));
+                return ((bool)(this["alarm"]));
             }
             set {
                 this["alarm"] = value;
@@ -314,9 +290,9 @@ namespace Massey_SCARA_Controller.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("100")]
-        public string spd_Vel {
+        public int spd_Vel {
             get {
-                return ((string)(this["spd_Vel"]));
+                return ((int)(this["spd_Vel"]));
             }
             set {
                 this["spd_Vel"] = value;
@@ -326,9 +302,9 @@ namespace Massey_SCARA_Controller.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("100")]
-        public string spd_Acc {
+        public int spd_Acc {
             get {
-                return ((string)(this["spd_Acc"]));
+                return ((int)(this["spd_Acc"]));
             }
             set {
                 this["spd_Acc"] = value;
