@@ -173,7 +173,22 @@
           <Label Grid.Row="2" Margin="2,2,2,2" VerticalAlignment="Center" HorizontalAlignment="Left" Content="Y:" Name="lbl_MoveY"/>
 
           <!--MOVE button-->
-          <Button Grid.Row="3" Grid.ColumnSpan="2" Margin="2,2,2,2" Content="Move" Click="btn_Move_Click" Name="btn_MoveExecute"/>
+          <Button 
+            Grid.Row="3" 
+            Grid.ColumnSpan="2" 
+            Content="Home" 
+            Margin="2,2,2,2" 
+            Click="btn_Home_Click"
+            Name="btn_Home"
+            />
+          <Button 
+            Grid.Row="3" 
+            Grid.ColumnSpan="3" 
+            Grid.Column="2"
+            Margin="2,2,2,2" 
+            Content="Move" 
+            Click="btn_Move_Click" 
+            Name="btn_MoveExecute"/>
 
           <!--Text boxes-->
           <TextBox Grid.Column="1" Grid.Row="0" Margin="2,2,2,2" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Text="0" Name="txt_MoveW" MaxLines="1" AcceptsTab="True"/>
@@ -238,14 +253,35 @@
             Name="btn_Gripper"
             Margin="2,2,2,2" 
             />
+
+          <Label Grid.Column="0" Grid.Row="2" Content="Conveyor:" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+
           <Button 
-            Grid.Row="2" 
-            Grid.ColumnSpan="2" 
-            Content="Home" 
+            Grid.Row="3"
+            Grid.Column="0" 
+            Content="Forward" 
             Margin="2,2,2,2" 
-            Click="btn_Home_Click"
-            Name="btn_Home"
+            Click="btn_ConvFor_Click"
+            Name="btn_ConvFor"
             />
+          <Button 
+            Grid.Row="3" 
+            Grid.Column="1" 
+            Content="Reverse" 
+            Click="btn_ConvBck_Click"
+            Name="btn_ConvBck"
+            Margin="2,2,2,2" 
+            />
+          <TextBox
+            Grid.Row="2" 
+            Grid.Column="1" 
+            VerticalAlignment="Stretch" 
+            HorizontalAlignment="Stretch"
+            Margin="2,2,2,2" 
+            Name="txt_ConvDist"
+            />
+
+
         </Grid>
       </Border>
       

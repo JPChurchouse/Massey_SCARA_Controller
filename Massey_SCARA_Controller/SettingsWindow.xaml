@@ -1,160 +1,183 @@
 ﻿<Window x:Class="Massey_SCARA_Controller.SettingsWindow"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Massey_SCARA_Controller"
-        mc:Ignorable="d"
-        Title="SCARA Controller - Settings" 
-        Height="300" 
-        Width="300" 
-        WindowState="Normal" 
-        ResizeMode="NoResize" 
-        Icon="/1701019.ico"
-        Closing="SettingsWindow_Closing">
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:local="clr-namespace:Massey_SCARA_Controller"
+    mc:Ignorable="d"
+    Title="SCARA Controller - Settings" 
+    Height="300" 
+    Width="400" 
+    WindowState="Normal" 
+    ResizeMode="NoResize" 
+    Icon="/1701019.ico"
+    Closing="SettingsWindow_Closing">
 
-    <Grid Margin="4,4,4,4">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
-        </Grid.RowDefinitions>
-        <TabControl BorderBrush="Black" BorderThickness="1">
-            <!--Visibility-->
-            <TabItem Header="Speed">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="1*"/>
-                        <ColumnDefinition Width="1*"/>
-                    </Grid.ColumnDefinitions>
+  <Grid Margin="4,4,4,4">
+    <Grid.RowDefinitions>
+      <RowDefinition Height="auto"/>
+      <RowDefinition Height="auto"/>
+    </Grid.RowDefinitions>
+    <TabControl BorderBrush="Black" BorderThickness="1">
+      <!--Visibility-->
+      <TabItem Header="Speed">
+        <Grid>
+          <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+          </Grid.RowDefinitions>
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+          </Grid.ColumnDefinitions>
 
-                    <Label Content="Speed" Grid.Column="0" Grid.Row="0"/>
-                    <Label Content="Acceleration" Grid.Column="0" Grid.Row="1"/>
-                    <TextBox Grid.Row="0" Grid.Column="1" HorizontalAlignment="Stretch" Margin="4,4,4,4" VerticalAlignment="Center" Name="txt_Speed" LostFocus="Any_Changed"/>
-                    <TextBox Grid.Row="1" Grid.Column="1" HorizontalAlignment="Stretch" Margin="4,4,4,4" VerticalAlignment="Center" Name="txt_Acceleration" LostFocus="Any_Changed"/>
+          <Label Content="Speed" Grid.Column="0" Grid.Row="0"/>
+          <Label Content="Acceleration" Grid.Column="0" Grid.Row="1"/>
+          <TextBox Grid.Row="0" Grid.Column="1" HorizontalAlignment="Stretch" Margin="4,4,4,4" VerticalAlignment="Center" Name="txt_Speed" LostFocus="Any_Changed"/>
+          <TextBox Grid.Row="1" Grid.Column="1" HorizontalAlignment="Stretch" Margin="4,4,4,4" VerticalAlignment="Center" Name="txt_Acceleration" LostFocus="Any_Changed"/>
 
-        </Grid>
-            </TabItem>
-            <!--Air-->
-            <TabItem Header="Pneumatics">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="1*"/>
-                        <ColumnDefinition Width="1*"/>
-                        <ColumnDefinition Width="1*"/>
-                        <ColumnDefinition Width="1*"/>
-                    </Grid.ColumnDefinitions>
-
-                    <!--Top labels-->
-                    <Label Grid.Column="1" Content="Inactive" HorizontalAlignment="Stretch" Margin="4,4,4,4" VerticalAlignment="Center"/>
-                    <Label Grid.Column="2" Content="Active" HorizontalAlignment="Stretch" Margin="4,4,4,4" VerticalAlignment="Center"/>
-                    <Label Grid.Column="3" Content="Delay" HorizontalAlignment="Stretch" Margin="4,4,4,4" VerticalAlignment="Center"/>
-
-                    <!--Side labels-->
-                    <Label Grid.Row="1" Content="Piston"  HorizontalAlignment="Stretch" Margin="4,4,4,4" VerticalAlignment="Center"/>
-                    <Label Grid.Row="2" Content="Gripper" HorizontalAlignment="Stretch" Margin="4,4,4,4" VerticalAlignment="Center"/>
-
-                    <!--Piston-->
-                    <TextBox Grid.Row="1" Grid.Column="1" HorizontalAlignment="Stretch" Margin="4,4,4,4" VerticalAlignment="Center" Name="txt_PistonInactive" LostFocus="Any_Changed"/>
-                    <TextBox Grid.Row="1" Grid.Column="2" HorizontalAlignment="Stretch" Margin="4,4,4,4" VerticalAlignment="Center" Name="txt_PistonActive" LostFocus="Any_Changed"/>
-                    <TextBox Grid.Row="1" Grid.Column="3" HorizontalAlignment="Stretch" Margin="4,4,4,4" VerticalAlignment="Center" Name="txt_PistonDelay" LostFocus="Any_Changed"/>
-
-                    <!--Gripper-->
-                    <TextBox Grid.Row="2" Grid.Column="1" HorizontalAlignment="Stretch" Margin="4,4,4,4" VerticalAlignment="Center" Name="txt_GripperInactive" LostFocus="Any_Changed"/>
-                    <TextBox Grid.Row="2" Grid.Column="2" HorizontalAlignment="Stretch" Margin="4,4,4,4" VerticalAlignment="Center" Name="txt_GripperActive" LostFocus="Any_Changed"/>
-                    <TextBox Grid.Row="2" Grid.Column="3" HorizontalAlignment="Stretch" Margin="4,4,4,4" VerticalAlignment="Center" Name="txt_GripperDelay" LostFocus="Any_Changed"/>
-                </Grid>
-            </TabItem>
-            <!--Mins and Maxes-->
-            <TabItem Header="Limits">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="1*"/>
-                        <ColumnDefinition Width="1*"/>
-                        <ColumnDefinition Width="1*"/>
-                        <ColumnDefinition Width="1*"/>
-                    </Grid.ColumnDefinitions>
-                    <!--Top labels-->
-                    <Label Grid.Column="1" Content="W" HorizontalAlignment="Stretch" Margin="4,4,4,4" VerticalAlignment="Center"/>
-                    <Label Grid.Column="2" Content="X" HorizontalAlignment="Stretch" Margin="4,4,4,4" VerticalAlignment="Center"/>
-                    <Label Grid.Column="3" Content="Y" HorizontalAlignment="Stretch" Margin="4,4,4,4" VerticalAlignment="Center"/>
-
-                    <!--Side labels-->
-                    <Label Grid.Row="1" Content="Min"  HorizontalAlignment="Stretch" Margin="4,4,4,4" VerticalAlignment="Center"/>
-                    <Label Grid.Row="2" Content="Max" HorizontalAlignment="Stretch" Margin="4,4,4,4" VerticalAlignment="Center"/>
-
-                    <!--Mins-->
-                    <TextBox Grid.Row="1" Grid.Column="1" HorizontalAlignment="Stretch" Margin="4,4,4,4" VerticalAlignment="Center" Name="txt_MinW" LostFocus="Any_Changed"/>
-                    <TextBox Grid.Row="1" Grid.Column="2" HorizontalAlignment="Stretch" Margin="4,4,4,4" VerticalAlignment="Center" Name="txt_MinX" LostFocus="Any_Changed"/>
-                    <TextBox Grid.Row="1" Grid.Column="3" HorizontalAlignment="Stretch" Margin="4,4,4,4" VerticalAlignment="Center" Name="txt_MinY" LostFocus="Any_Changed"/>
-
-                    <!--Maxes-->
-                    <TextBox Grid.Row="2" Grid.Column="1" HorizontalAlignment="Stretch" Margin="4,4,4,4" VerticalAlignment="Center" Name="txt_MaxW" LostFocus="Any_Changed"/>
-                    <TextBox Grid.Row="2" Grid.Column="2" HorizontalAlignment="Stretch" Margin="4,4,4,4" VerticalAlignment="Center" Name="txt_MaxX" LostFocus="Any_Changed"/>
-                    <TextBox Grid.Row="2" Grid.Column="3" HorizontalAlignment="Stretch" Margin="4,4,4,4" VerticalAlignment="Center" Name="txt_MaxY" LostFocus="Any_Changed"/>
-                </Grid>
-            </TabItem>
-            <!--Serial-->
-            <TabItem Header="Serial">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="1*"/>
-                        <ColumnDefinition Width="1*"/>
-                    </Grid.ColumnDefinitions>
-                    <!--Side labels-->
-                    <Label Grid.Row="0" Content="Baudrate:"  HorizontalAlignment="Stretch" Margin="4,4,4,4" VerticalAlignment="Center"/>
-                    <Label Grid.Row="1" Content="Timeout:" HorizontalAlignment="Stretch" Margin="4,4,4,4" VerticalAlignment="Center"/>
-                    <Label Grid.Row="2" Content="Lockout:" HorizontalAlignment="Stretch" Margin="4,4,4,4" VerticalAlignment="Center"/>
-
-                    <!--Mins-->
-                    <TextBox Grid.Row="0" Grid.Column="1" HorizontalAlignment="Stretch" Margin="4,4,4,4" VerticalAlignment="Center" Name="txt_Baudrate" LostFocus="Any_Changed"/>
-                    <TextBox Grid.Row="1" Grid.Column="1" HorizontalAlignment="Stretch" Margin="4,4,4,4" VerticalAlignment="Center" Name="txt_Timeout" LostFocus="Any_Changed"/>
-                    <TextBox Grid.Row="2" Grid.Column="1" HorizontalAlignment="Stretch" Margin="4,4,4,4" VerticalAlignment="Center" Name="txt_Lockout" LostFocus="Any_Changed"/>
-                </Grid>
-            </TabItem>
-            <!--Misc-->
-            <TabItem Header="Misc">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="1*"/>
-                        <ColumnDefinition Width="1*"/>
-                    </Grid.ColumnDefinitions>
-
-                    <CheckBox Grid.Row="0" Grid.Column="0" Margin="4,0,4,0" VerticalAlignment="Center" Name="chk_Alarm" Content="Alarm" Click="Any_Changed"/>
-                </Grid>
-            </TabItem>
-
-        </TabControl>
-        <Grid Grid.Row="2" Margin="0,2,0,2">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-            </Grid.ColumnDefinitions>
-            <Button Content="Confirm" Grid.Column="1" Margin="4,4,4,4" Name="btn_Confirm" Click="Confirm_Click"/>
-        </Grid>
     </Grid>
+      </TabItem>
+      <!--Air-->
+      <TabItem Header="Pneumatics">
+        <Grid>
+          <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+          </Grid.RowDefinitions>
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+          </Grid.ColumnDefinitions>
+
+          <!--Top labels-->
+          <Label Grid.Column="1" Content="Inactive" HorizontalAlignment="Stretch" Margin="4,4,4,4" VerticalAlignment="Center"/>
+          <Label Grid.Column="2" Content="Active" HorizontalAlignment="Stretch" Margin="4,4,4,4" VerticalAlignment="Center"/>
+          <Label Grid.Column="3" Content="Delay" HorizontalAlignment="Stretch" Margin="4,4,4,4" VerticalAlignment="Center"/>
+
+          <!--Side labels-->
+          <Label Grid.Row="1" Content="Piston" HorizontalAlignment="Stretch" Margin="4,4,4,4" VerticalAlignment="Center"/>
+          <Label Grid.Row="2" Content="Gripper" HorizontalAlignment="Stretch" Margin="4,4,4,4" VerticalAlignment="Center"/>
+
+          <!--Piston-->
+          <TextBox Grid.Row="1" Grid.Column="1" HorizontalAlignment="Stretch" Margin="4,4,4,4" VerticalAlignment="Center" Name="txt_PistonInactive" LostFocus="Any_Changed"/>
+          <TextBox Grid.Row="1" Grid.Column="2" HorizontalAlignment="Stretch" Margin="4,4,4,4" VerticalAlignment="Center" Name="txt_PistonActive" LostFocus="Any_Changed"/>
+          <TextBox Grid.Row="1" Grid.Column="3" HorizontalAlignment="Stretch" Margin="4,4,4,4" VerticalAlignment="Center" Name="txt_PistonDelay" LostFocus="Any_Changed"/>
+
+          <!--Gripper-->
+          <TextBox Grid.Row="2" Grid.Column="1" HorizontalAlignment="Stretch" Margin="4,4,4,4" VerticalAlignment="Center" Name="txt_GripperInactive" LostFocus="Any_Changed"/>
+          <TextBox Grid.Row="2" Grid.Column="2" HorizontalAlignment="Stretch" Margin="4,4,4,4" VerticalAlignment="Center" Name="txt_GripperActive" LostFocus="Any_Changed"/>
+          <TextBox Grid.Row="2" Grid.Column="3" HorizontalAlignment="Stretch" Margin="4,4,4,4" VerticalAlignment="Center" Name="txt_GripperDelay" LostFocus="Any_Changed"/>
+        </Grid>
+      </TabItem>
+      <!--Mins and Maxes-->
+      <TabItem Header="Limits">
+        <Grid>
+          <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+          </Grid.RowDefinitions>
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+          </Grid.ColumnDefinitions>
+          <!--Top labels-->
+          <Label Grid.Column="1" Content="W" HorizontalAlignment="Stretch" Margin="4,4,4,4" VerticalAlignment="Center"/>
+          <Label Grid.Column="2" Content="X" HorizontalAlignment="Stretch" Margin="4,4,4,4" VerticalAlignment="Center"/>
+          <Label Grid.Column="3" Content="Y" HorizontalAlignment="Stretch" Margin="4,4,4,4" VerticalAlignment="Center"/>
+
+          <!--Side labels-->
+          <Label Grid.Row="1" Content="Min" HorizontalAlignment="Stretch" Margin="4,4,4,4" VerticalAlignment="Center"/>
+          <Label Grid.Row="2" Content="Max" HorizontalAlignment="Stretch" Margin="4,4,4,4" VerticalAlignment="Center"/>
+
+          <!--Mins-->
+          <TextBox Grid.Row="1" Grid.Column="1" HorizontalAlignment="Stretch" Margin="4,4,4,4" VerticalAlignment="Center" Name="txt_MinW" LostFocus="Any_Changed"/>
+          <TextBox Grid.Row="1" Grid.Column="2" HorizontalAlignment="Stretch" Margin="4,4,4,4" VerticalAlignment="Center" Name="txt_MinX" LostFocus="Any_Changed"/>
+          <TextBox Grid.Row="1" Grid.Column="3" HorizontalAlignment="Stretch" Margin="4,4,4,4" VerticalAlignment="Center" Name="txt_MinY" LostFocus="Any_Changed"/>
+
+          <!--Maxes-->
+          <TextBox Grid.Row="2" Grid.Column="1" HorizontalAlignment="Stretch" Margin="4,4,4,4" VerticalAlignment="Center" Name="txt_MaxW" LostFocus="Any_Changed"/>
+          <TextBox Grid.Row="2" Grid.Column="2" HorizontalAlignment="Stretch" Margin="4,4,4,4" VerticalAlignment="Center" Name="txt_MaxX" LostFocus="Any_Changed"/>
+          <TextBox Grid.Row="2" Grid.Column="3" HorizontalAlignment="Stretch" Margin="4,4,4,4" VerticalAlignment="Center" Name="txt_MaxY" LostFocus="Any_Changed"/>
+        </Grid>
+      </TabItem>
+      <!--Serial-->
+      <TabItem Header="Serial">
+        <Grid>
+          <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+          </Grid.RowDefinitions>
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+          </Grid.ColumnDefinitions>
+          <!--Side labels-->
+          <Label Grid.Row="0" Content="Baudrate:" HorizontalAlignment="Stretch" Margin="4,4,4,4" VerticalAlignment="Center"/>
+          <Label Grid.Row="1" Content="Timeout:" HorizontalAlignment="Stretch" Margin="4,4,4,4" VerticalAlignment="Center"/>
+          <Label Grid.Row="2" Content="Lockout:" HorizontalAlignment="Stretch" Margin="4,4,4,4" VerticalAlignment="Center"/>
+
+          <!--Mins-->
+          <TextBox Grid.Row="0" Grid.Column="1" HorizontalAlignment="Stretch" Margin="4,4,4,4" VerticalAlignment="Center" Name="txt_Baudrate" LostFocus="Any_Changed"/>
+          <TextBox Grid.Row="1" Grid.Column="1" HorizontalAlignment="Stretch" Margin="4,4,4,4" VerticalAlignment="Center" Name="txt_Timeout" LostFocus="Any_Changed"/>
+          <TextBox Grid.Row="2" Grid.Column="1" HorizontalAlignment="Stretch" Margin="4,4,4,4" VerticalAlignment="Center" Name="txt_Lockout" LostFocus="Any_Changed"/>
+        </Grid>
+      </TabItem>
+     <!--Misc-->
+     <TabItem Header="Conveyor">
+      <Grid>
+       <Grid.RowDefinitions>
+        <RowDefinition Height="Auto"/>
+        <RowDefinition Height="Auto"/>
+        <RowDefinition Height="Auto"/>
+       </Grid.RowDefinitions>
+       <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="1*"/>
+        <ColumnDefinition Width="1*"/>
+       </Grid.ColumnDefinitions>
+       <!--Side labels-->
+       <Label Grid.Row="0" Content="Forward:" HorizontalAlignment="Stretch" Margin="4,4,4,4" VerticalAlignment="Center"/>
+       <Label Grid.Row="1" Content="Reverse:" HorizontalAlignment="Stretch" Margin="4,4,4,4" VerticalAlignment="Center"/>
+       <Label Grid.Row="2" Content="Distance:" HorizontalAlignment="Stretch" Margin="4,4,4,4" VerticalAlignment="Center"/>
+
+       <!--Mins-->
+       <TextBox Grid.Row="0" Grid.Column="1" HorizontalAlignment="Stretch" Margin="4,4,4,4" VerticalAlignment="Center" Name="txt_ConvFor" LostFocus="Any_Changed"/>
+       <TextBox Grid.Row="1" Grid.Column="1" HorizontalAlignment="Stretch" Margin="4,4,4,4" VerticalAlignment="Center" Name="txt_ConvRev" LostFocus="Any_Changed"/>
+       <TextBox Grid.Row="2" Grid.Column="1" HorizontalAlignment="Stretch" Margin="4,4,4,4" VerticalAlignment="Center" Name="txt_ConvDis" LostFocus="Any_Changed"/>
+      </Grid>
+     </TabItem>
+     <!--Misc-->
+      <TabItem Header="Misc">
+        <Grid>
+          <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+          </Grid.RowDefinitions>
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+          </Grid.ColumnDefinitions>
+
+          <CheckBox Grid.Row="0" Grid.Column="0" Margin="4,0,4,0" VerticalAlignment="Center" Name="chk_Alarm" Content="Alarm" Click="Any_Changed"/>
+        </Grid>
+      </TabItem>
+
+    </TabControl>
+    <Grid Grid.Row="2" Margin="0,2,0,2">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition/>
+        <ColumnDefinition/>
+      </Grid.ColumnDefinitions>
+      <Button Content="Confirm" Grid.Column="1" Margin="4,4,4,4" Name="btn_Confirm" Click="Confirm_Click"/>
+    </Grid>
+  </Grid>
 </Window>

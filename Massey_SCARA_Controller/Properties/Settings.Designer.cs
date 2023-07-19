@@ -310,5 +310,41 @@ namespace Massey_SCARA_Controller.Properties {
                 this["spd_Acc"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("F")]
+        public string conv_For {
+            get {
+                return ((string)(this["conv_For"]));
+            }
+            set {
+                this["conv_For"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("R")]
+        public string conv_Rev {
+            get {
+                return ((string)(this["conv_Rev"]));
+            }
+            set {
+                this["conv_Rev"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("500")]
+        public int conv_Dist {
+            get {
+                return ((int)(this["conv_Dist"]));
+            }
+            set {
+                this["conv_Dist"] = value;
+            }
+        }
     }
 }

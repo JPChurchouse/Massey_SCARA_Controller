@@ -161,6 +161,14 @@ namespace Massey_SCARA_Controller
             sld_MoveY.Value = Y;
         }
 
-    
+    private void btn_ConvBck_Click(object sender, RoutedEventArgs e)
+    {
+
+    }
+
+    private void btn_ConvFor_Click(object sender, RoutedEventArgs e)
+    {
+
+    }
   }
 }

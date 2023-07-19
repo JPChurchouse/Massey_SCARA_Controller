@@ -74,5 +74,14 @@
     <Setting Name="spd_Acc" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">100</Value>
     </Setting>
+    <Setting Name="conv_For" Type="System.String" Scope="User">
+      <Value Profile="(Default)">F</Value>
+    </Setting>
+    <Setting Name="conv_Rev" Type="System.String" Scope="User">
+      <Value Profile="(Default)">R</Value>
+    </Setting>
+    <Setting Name="conv_Dist" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">500</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
