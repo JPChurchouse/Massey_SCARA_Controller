@@ -1,0 +1,345 @@
+﻿<Window x:Class="SCARA_GUI.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:local="clr-namespace:SCARA_GUI"
+    mc:Ignorable="d"
+    Title="Massey Univeristy - School of Food and Advanced Technology - SCARA 🦾" 
+    Height="450" 
+    Width="800" 
+    WindowState="Normal" 
+    ResizeMode="CanResize" 
+    MinHeight="450" 
+    MinWidth="600" Icon="/1701019.ico"
+    SizeChanged="WindowResized"
+    Closing="MainWindow_Closing" 
+    StateChanged="WindowResized">
+
+  <Grid>
+    <Grid.RowDefinitions>
+      <RowDefinition Name="MenuBar" Height="22"/>
+      <RowDefinition Name="StatusBar" Height="1*"/>
+      <RowDefinition Name="Body" Height="10*"/>
+    </Grid.RowDefinitions>
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Name="Controls" Width="3*" MinWidth="400"/>
+      <ColumnDefinition Name="Border" Width="Auto"/>
+      <ColumnDefinition Name="Output" Width="*" MinWidth="150"/>
+    </Grid.ColumnDefinitions>
+
+    <GridSplitter 
+      Grid.Column="1" 
+      Width="5" 
+      HorizontalAlignment="Center" 
+      VerticalAlignment="Stretch"
+      Background="Silver"
+      Grid.RowSpan="3"
+      />
+
+    <!--Top menu-->
+    <Menu
+      Name="Menu" 
+      Grid.Row="0"
+      Grid.Column="0"
+      Grid.ColumnSpan="3"
+      Margin="0"
+      VerticalAlignment="Stretch" 
+      HorizontalAlignment="Stretch" 
+      >
+      <MenuItem Header="File">
+        <MenuItem Header="Open Log File" Click="menu_OpenFile_Clicked"/>
+      </MenuItem>
+      <MenuItem Header="Options">
+        <MenuItem Header="Outputs" Name="menu_Outputs">
+          <MenuItem Header="Clear" Name="menu_Outputs_Clear" Click="menu_Out_Clicked"/>
+          <MenuItem Header="Alerts" IsChecked="True" IsEnabled="False" Name="menu_Outputs_Alert" Click="menu_Out_Clicked"/>
+          <MenuItem Header="System" IsCheckable="True" IsChecked="False" Name="menu_Outputs_System" Click="menu_Out_Clicked"/>
+          <MenuItem Header="Transmit" IsCheckable="True" IsChecked="True" Name="menu_Outputs_Transmit" Click="menu_Out_Clicked"/>
+          <MenuItem Header="Receive" IsCheckable="True" IsChecked="True" Name="menu_Outputs_Receive" Click="menu_Out_Clicked"/>
+        </MenuItem>
+        <MenuItem Header="Advanced" Click="menu_Advanced_Clicked"/>
+      </MenuItem>
+      <MenuItem Header="Help" Click="menu_Help_Clicked">
+      </MenuItem>
+    </Menu>
+
+    <!--Connection panel-->
+    <Grid Grid.Row="1" Background="DodgerBlue">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="3*"/>
+        <ColumnDefinition Width="2*"/>
+      </Grid.ColumnDefinitions>
+
+      <Label
+        Grid.Column="0"
+        Name="lbl_ConnectionStatus" 
+        Content="Status: Disconnected"
+        VerticalAlignment="Center"
+        HorizontalAlignment="Stretch"
+        Margin="10,2,2,2"
+        Foreground="White"
+        FontWeight="Bold"
+        />
+      <Button
+        Name="btn_Connect"
+        Grid.Column="1"
+        Click="btn_Connect_Click"
+        Content="Connect" 
+        HorizontalAlignment="Stretch" 
+        VerticalAlignment="Stretch"
+        Margin="2,2,2,2"
+        IsDefault="True"
+        />
+    </Grid>
+
+    <!--Status panel-->
+    <Grid Grid.Row="1" Grid.Column="2" Background="DodgerBlue"/>
+    <Label 
+      Name="lbl_DeviceStatus"
+      Grid.Column="2" 
+      Grid.Row="1"
+      Content="Offline"
+      VerticalAlignment="Center"
+      HorizontalAlignment="Center"
+      Margin="2,2,2,2"
+      Foreground="White"
+      FontWeight="Bold"
+    />
+
+    <!--Inputs panel-->
+    <Grid Grid.Row="2" Name="panel_Inputs">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="1*"/>
+        <ColumnDefinition Width="1*"/>
+        <ColumnDefinition Width="1*"/>
+      </Grid.ColumnDefinitions>
+      <Grid.RowDefinitions>
+        <RowDefinition Height="2*"/>
+        <RowDefinition Height="3*"/>
+        <RowDefinition Height="3*"/>
+      </Grid.RowDefinitions>
+
+      <!--E-STOP-->
+      <Button
+        Content="STOP"
+        Margin="4,2,4,2"
+        FontSize="40"
+        FontWeight="Bold"
+        Foreground="White"
+        BorderBrush="Black"
+        BorderThickness="2"
+        Click="btn_Stop_Click"
+        Name="btn_EmergencyStop" 
+        ToolTip="Emergency Stop" 
+        IsDefault="True"
+        Grid.Column="1"
+        Grid.ColumnSpan="2"
+        >
+        <Button.Background>
+          <RadialGradientBrush>
+            <GradientStop Color="#FF9A0000" Offset="1"/>
+            <GradientStop Color="Red"/>
+          </RadialGradientBrush>
+        </Button.Background>
+      </Button>
+
+      <!--Move func-->
+      <Border 
+        Grid.Row="2" 
+        Grid.Column="1"
+        Grid.ColumnSpan="2"
+        Margin="4,2,2,2"
+        BorderThickness="2" 
+        BorderBrush="CornflowerBlue">
+        <Grid>
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="5*"/>
+            <ColumnDefinition Width="1*"/>
+          </Grid.ColumnDefinitions>
+          <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+          </Grid.RowDefinitions>
+
+          <!--Labels-->
+          <Label Grid.Row="0" Margin="2,2,2,2" VerticalAlignment="Center" HorizontalAlignment="Left" Content="W:" Name="lbl_MoveW"/>
+          <Label Grid.Row="1" Margin="2,2,2,2" VerticalAlignment="Center" HorizontalAlignment="Left" Content="X:" Name="lbl_MoveX"/>
+          <Label Grid.Row="2" Margin="2,2,2,2" VerticalAlignment="Center" HorizontalAlignment="Left" Content="Y:" Name="lbl_MoveY"/>
+
+          <!--MOVE button-->
+          <Button Grid.Row="3" Grid.ColumnSpan="2" Margin="2,2,2,2" Content="Move" Click="btn_Move_Click" Name="btn_MoveExecute"/>
+
+          <!--Text boxes-->
+          <TextBox Grid.Column="1" Grid.Row="0" Margin="2,2,2,2" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Text="0" Name="txt_MoveW" MaxLines="1" AcceptsTab="True"/>
+          <TextBox Grid.Column="1" Grid.Row="1" Margin="2,2,2,2" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Text="0" Name="txt_MoveX" MaxLines="1" AcceptsTab="True"/>
+          <TextBox Grid.Column="1" Grid.Row="2" Margin="2,2,2,2" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Text="0" Name="txt_MoveY" MaxLines="1" AcceptsTab="True"/>
+
+          <!--Jog decrease-->
+          <Button Grid.Row="0" Grid.Column="2" Margin="8,8,8,8" Content="-" Click="btn_JogDecW_Click" Name="btn_MoveWJogDown" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
+          <Button Grid.Row="1" Grid.Column="2" Margin="8,8,8,8" Content="-" Click="btn_JogDecX_Click" Name="btn_MoveXJogDown" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
+          <Button Grid.Row="2" Grid.Column="2" Margin="8,8,8,8" Content="-" Click="btn_JogDecY_Click" Name="btn_MoveYJogDown" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
+
+          <!--Jog increase-->
+          <Button Grid.Row="0" Grid.Column="4" Margin="8,8,8,8" Content="+" Click="btn_JogIncW_Click" Name="btn_MoveWJogUp" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
+          <Button Grid.Row="1" Grid.Column="4" Margin="8,8,8,8" Content="+" Click="btn_JogIncX_Click" Name="btn_MoveXJogUp" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
+          <Button Grid.Row="2" Grid.Column="4" Margin="8,8,8,8" Content="+" Click="btn_JogIncY_Click" Name="btn_MoveYJogUp" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
+
+          <!--Sliders-->
+          <Slider Grid.Column="3" Grid.Row="0" Margin="2,2,2,2" VerticalAlignment="Center" HorizontalAlignment="Stretch" Name="sld_MoveW" IsSelectionRangeEnabled="True" 
+              SmallChange="1" LargeChange="5" TickFrequency="1" IsSnapToTickEnabled="True" Thumb.DragCompleted="sld_MoveW_Release" Thumb.DragDelta="sld_MoveW_Dragging"/>
+          <Slider Grid.Column="3" Grid.Row="1" Margin="2,2,2,2" VerticalAlignment="Center" HorizontalAlignment="Stretch" Name="sld_MoveX" IsSelectionRangeEnabled="True" 
+              SmallChange="1" LargeChange="5" TickFrequency="1" IsSnapToTickEnabled="True" Thumb.DragCompleted="sld_MoveX_Release" Thumb.DragDelta="sld_MoveX_Dragging"/>
+          <Slider Grid.Column="3" Grid.Row="2" Margin="2,2,2,2" VerticalAlignment="Center" HorizontalAlignment="Stretch" Name="sld_MoveY" IsSelectionRangeEnabled="True" 
+              SmallChange="1" LargeChange="5" TickFrequency="1" IsSnapToTickEnabled="True" Thumb.DragCompleted="sld_MoveY_Release" Thumb.DragDelta="sld_MoveY_Dragging"/>
+
+        </Grid>
+      </Border>
+
+      <!---Air func-->
+      <Border 
+        Grid.Row="1" 
+        Grid.Column="2"
+        Margin="2,2,4,2"
+        BorderThickness="2" 
+        BorderBrush="CornflowerBlue">
+        <Grid>
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+          </Grid.ColumnDefinitions>
+          <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+          </Grid.RowDefinitions>
+
+          <Label Grid.Row="0" Content="Piston:" Name="lbl_Piston" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+          <Label Grid.Row="1" Content="Gripper:" Name="lbl_Gripper" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+
+          <Button 
+            Grid.Column="1" 
+            Content="DOWN" 
+            Margin="2,2,2,2" 
+            Click="btn_Piston_Click"
+            Name="btn_Piston"
+            />
+          <Button 
+            Grid.Row="1" 
+            Grid.Column="1" 
+            Content="CLOSE" 
+            Click="btn_Gripper_Click"
+            Name="btn_Gripper"
+            Margin="2,2,2,2" 
+            />
+          <Button 
+            Grid.Row="2" 
+            Grid.ColumnSpan="2" 
+            Content="Home" 
+            Margin="2,2,2,2" 
+            Click="btn_Home_Click"
+            Name="btn_Home"
+            />
+        </Grid>
+      </Border>
+      
+      <!--Logo-->
+      <Border 
+        Grid.Row="0" 
+        Grid.Column="0"
+        Margin="2,2,4,2"
+        BorderThickness="2" 
+        BorderBrush="CornflowerBlue">
+        
+        <Image 
+        Grid.Row="0" 
+        Name="img_Placeholder"
+        Source="Massey-University.png" 
+        Margin="4,4,4,4" 
+        HorizontalAlignment="Center"
+        VerticalAlignment="Center"/>
+      </Border>
+
+      <!--Script-->
+      <Border 
+        Grid.Row="1" 
+        Grid.Column="1"
+        Margin="2,2,4,2"
+        BorderThickness="2" 
+        BorderBrush="CornflowerBlue">
+
+        <Grid>
+          <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+          </Grid.RowDefinitions>
+
+          <Button 
+            Content="Select Script" 
+            Margin="2,2,2,2" 
+            Click="btn_SelectScript_Click"
+            Name="btn_SelectScript"
+            />
+          <Button 
+            Grid.Row="1"
+            Content="Run Script" 
+            Margin="2,2,2,2" 
+            Click="btn_RunScript_Click"
+            Name="btn_RunScript"
+            />
+          <Button 
+            Grid.Row="2"
+            Content="Remove Pose From Script" 
+            Margin="2,2,2,2" 
+            Click="btn_RemovePose_Click"
+            Name="btn_RemovePose"
+            />
+          <Button 
+            Grid.Row="3"
+            Content="Delete Script" 
+            Margin="2,2,2,2" 
+            Click="btn_DeleteScript_Click"
+            Name="btn_DeleteScript"
+            />
+        </Grid>
+      </Border>
+
+      <!--Script List-->
+      <Border 
+        Grid.Row="1" 
+        Grid.Column="0"
+        Grid.RowSpan="2"
+        Margin="2,2,4,2"
+        BorderThickness="2" 
+        BorderBrush="CornflowerBlue">
+
+        <ListView Name="lst_ScriptList"/>
+      </Border>
+
+
+    </Grid>
+    <!--Output-->
+    <TextBox 
+      Grid.Column="2" 
+      HorizontalAlignment="Stretch" 
+      Margin="5,5,5,5" 
+      Grid.Row="2" 
+      BorderBrush="CornflowerBlue"
+      BorderThickness="3"
+      TextWrapping="NoWrap"
+      Text="" 
+      VerticalAlignment="Stretch"
+      Name="text_OuputLog" 
+      IsReadOnly="True" 
+      MouseDoubleClick="LogBox_DoubleClicked"
+      />
+  </Grid>
+</Window>
