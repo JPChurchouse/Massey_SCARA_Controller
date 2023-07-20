@@ -11,7 +11,7 @@
     WindowState="Normal" 
     ResizeMode="CanResize" 
     MinHeight="450" 
-    MinWidth="600" Icon="/1701019.ico"
+    MinWidth="600" Icon="/icon.ico"
     SizeChanged="WindowResized"
     Closing="MainWindow_Closing" 
     StateChanged="WindowResized">
@@ -284,7 +284,7 @@
 
         </Grid>
       </Border>
-      
+
       <!--Logo-->
       <Border 
         Grid.Row="0" 
@@ -292,7 +292,7 @@
         Margin="2,2,4,2"
         BorderThickness="2" 
         BorderBrush="CornflowerBlue">
-        
+
         <Image 
         Grid.Row="0" 
         Name="img_Placeholder"
@@ -305,59 +305,87 @@
       <!--Script-->
       <Border 
         Grid.Row="1" 
-        Grid.Column="1"
+        Grid.Column="0"
+          Grid.RowSpan="2"
         Margin="2,2,4,2"
         BorderThickness="2" 
         BorderBrush="CornflowerBlue">
-
         <Grid>
           <Grid.RowDefinitions>
             <RowDefinition/>
             <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
           </Grid.RowDefinitions>
 
-          <Button 
-            Content="Select Script" 
-            Margin="2,2,2,2" 
-            Click="btn_SelectScript_Click"
-            Name="btn_SelectScript"
+
+          <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+              <RowDefinition/>
+              <RowDefinition/>
+              <RowDefinition/>
+              <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition/>
+              <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <Button 
+              Grid.Row="0"
+              Grid.Column="0"
+              Content="Move Up" 
+              Margin="2,2,2,2" 
+              Click="btn_ScriptUp_Click"
+              Name="btn_ScriptUp"
             />
-          <Button 
-            Grid.Row="1"
-            Content="Run Script" 
-            Margin="2,2,2,2" 
-            Click="btn_RunScript_Click"
-            Name="btn_RunScript"
+            <Button 
+              Grid.Row="0"
+              Grid.Column="1"
+              Content="Move Down" 
+              Margin="2,2,2,2" 
+              Click="btn_ScriptDown_Click"
+              Name="btn_ScriptDown"
             />
-          <Button 
-            Grid.Row="2"
-            Content="Remove Pose From Script" 
-            Margin="2,2,2,2" 
-            Click="btn_RemovePose_Click"
-            Name="btn_RemovePose"
+            <Button 
+              Grid.Row="1"
+              Grid.Column="0"
+              Content="Remove" 
+              Margin="2,2,2,2" 
+              Click="btn_ScriptRemove_Click"
+              Name="btn_ScriptRemove"
             />
-          <Button 
-            Grid.Row="3"
-            Content="Delete Script" 
-            Margin="2,2,2,2" 
-            Click="btn_DeleteScript_Click"
-            Name="btn_DeleteScript"
+            <Button 
+              Grid.Row="1"
+              Grid.Column="1"
+              Content="Add" 
+              Margin="2,2,2,2" 
+              Click="btn_ScriptAdd_Click"
+              Name="btn_ScriptAdd"
             />
+            <Button 
+              Grid.Row="2"
+              Grid.Column="0"
+              Content="Select" 
+              Margin="2,2,2,2" 
+              Click="btn_SelectScript_Click"
+              Name="btn_SelectScript"
+            />
+            <Button 
+              Grid.Row="2"
+              Grid.Column="1"
+              Content="Run" 
+              Margin="2,2,2,2" 
+              Click="btn_RunScript_Click"
+              Name="btn_RunScript"
+            />
+          </Grid>
+
+          <ScrollViewer>
+            <ListView
+              Name="list_Sequence" 
+              MouseDoubleClick="list_Sequence_MouseDoubleClick"
+              />
+          </ScrollViewer>
         </Grid>
-      </Border>
-
-      <!--Script List-->
-      <Border 
-        Grid.Row="1" 
-        Grid.Column="0"
-        Grid.RowSpan="2"
-        Margin="2,2,4,2"
-        BorderThickness="2" 
-        BorderBrush="CornflowerBlue">
-
-        <ListView Name="lst_ScriptList"/>
       </Border>
 
 

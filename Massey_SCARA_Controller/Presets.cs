@@ -5,7 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Data;
-using
 
 
 // https://code-maze.com/introduction-system-text-json-examples/
@@ -15,16 +14,6 @@ namespace Massey_SCARA_Controller
 {
   public partial class MainWindow : Window
   {
-   private struct Configuration
-   {
-      public int X = 0;
-      public Configuration()
-      {
-      }
-
-      Y, W;
-      public string MOVE() { return $"MOVE,{X},{Y},{W}"; }
-    }
 
 
     string file_Presets = Environment.CurrentDirectory + "\\presets.json";
