@@ -9,9 +9,9 @@
     Height="300" 
     Width="400" 
     WindowState="Normal" 
-    ResizeMode="NoResize" 
-    Icon="/1701019.ico"
-    Closing="SettingsWindow_Closing">
+    ResizeMode="NoResize"
+    Closing="SettingsWindow_Closing"
+    Icon="/icon.ico">
 
   <Grid Margin="4,4,4,4">
     <Grid.RowDefinitions>

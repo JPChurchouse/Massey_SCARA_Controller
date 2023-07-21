@@ -11,10 +11,11 @@
     WindowState="Normal" 
     ResizeMode="CanResize" 
     MinHeight="450" 
-    MinWidth="600" Icon="/icon.ico"
+    MinWidth="600"
     SizeChanged="WindowResized"
     Closing="MainWindow_Closing" 
-    StateChanged="WindowResized">
+    StateChanged="WindowResized"
+    Icon="/icon.ico">
 
   <Grid>
     <Grid.RowDefinitions>
@@ -115,9 +116,9 @@
         <ColumnDefinition Width="1*"/>
       </Grid.ColumnDefinitions>
       <Grid.RowDefinitions>
-        <RowDefinition Height="2*"/>
         <RowDefinition Height="3*"/>
-        <RowDefinition Height="3*"/>
+        <RowDefinition Height="6*"/>
+        <RowDefinition Height="4*"/>
       </Grid.RowDefinitions>
 
       <!--E-STOP-->
@@ -146,7 +147,7 @@
 
       <!--Move func-->
       <Border 
-        Grid.Row="2" 
+        Grid.Row="1" 
         Grid.Column="1"
         Grid.ColumnSpan="2"
         Margin="4,2,2,2"
@@ -165,16 +166,26 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
           </Grid.RowDefinitions>
 
+          <Label 
+            Grid.Row="0" 
+            Content="Movement" 
+            VerticalAlignment="Center" 
+            HorizontalAlignment="Center"
+            Grid.ColumnSpan="5" 
+            FontWeight="Bold"/>
+
+
           <!--Labels-->
-          <Label Grid.Row="0" Margin="2,2,2,2" VerticalAlignment="Center" HorizontalAlignment="Left" Content="W:" Name="lbl_MoveW"/>
-          <Label Grid.Row="1" Margin="2,2,2,2" VerticalAlignment="Center" HorizontalAlignment="Left" Content="X:" Name="lbl_MoveX"/>
-          <Label Grid.Row="2" Margin="2,2,2,2" VerticalAlignment="Center" HorizontalAlignment="Left" Content="Y:" Name="lbl_MoveY"/>
+          <Label Grid.Row="1" Margin="2,2,2,2" VerticalAlignment="Center" HorizontalAlignment="Left" Content="W:" Name="lbl_MoveW"/>
+          <Label Grid.Row="2" Margin="2,2,2,2" VerticalAlignment="Center" HorizontalAlignment="Left" Content="X:" Name="lbl_MoveX"/>
+          <Label Grid.Row="3" Margin="2,2,2,2" VerticalAlignment="Center" HorizontalAlignment="Left" Content="Y:" Name="lbl_MoveY"/>
 
           <!--MOVE button-->
           <Button 
-            Grid.Row="3" 
+            Grid.Row="4" 
             Grid.ColumnSpan="2" 
             Content="Home" 
             Margin="2,2,2,2" 
@@ -182,7 +193,7 @@
             Name="btn_Home"
             />
           <Button 
-            Grid.Row="3" 
+            Grid.Row="4" 
             Grid.ColumnSpan="3" 
             Grid.Column="2"
             Margin="2,2,2,2" 
@@ -191,26 +202,26 @@
             Name="btn_MoveExecute"/>
 
           <!--Text boxes-->
-          <TextBox Grid.Column="1" Grid.Row="0" Margin="2,2,2,2" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Text="0" Name="txt_MoveW" MaxLines="1" AcceptsTab="True"/>
-          <TextBox Grid.Column="1" Grid.Row="1" Margin="2,2,2,2" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Text="0" Name="txt_MoveX" MaxLines="1" AcceptsTab="True"/>
-          <TextBox Grid.Column="1" Grid.Row="2" Margin="2,2,2,2" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Text="0" Name="txt_MoveY" MaxLines="1" AcceptsTab="True"/>
+          <TextBox Grid.Column="1" Grid.Row="1" Margin="2,2,2,2" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Text="0" Name="txt_MoveW" MaxLines="1" AcceptsTab="True"/>
+          <TextBox Grid.Column="1" Grid.Row="2" Margin="2,2,2,2" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Text="0" Name="txt_MoveX" MaxLines="1" AcceptsTab="True"/>
+          <TextBox Grid.Column="1" Grid.Row="3" Margin="2,2,2,2" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Text="0" Name="txt_MoveY" MaxLines="1" AcceptsTab="True"/>
 
           <!--Jog decrease-->
-          <Button Grid.Row="0" Grid.Column="2" Margin="8,8,8,8" Content="-" Click="btn_JogDecW_Click" Name="btn_MoveWJogDown" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
-          <Button Grid.Row="1" Grid.Column="2" Margin="8,8,8,8" Content="-" Click="btn_JogDecX_Click" Name="btn_MoveXJogDown" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
-          <Button Grid.Row="2" Grid.Column="2" Margin="8,8,8,8" Content="-" Click="btn_JogDecY_Click" Name="btn_MoveYJogDown" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
+          <Button Grid.Row="1" Grid.Column="2" Margin="8,8,8,8" Content="-" Click="btn_JogDecW_Click" Name="btn_MoveWJogDown" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
+          <Button Grid.Row="2" Grid.Column="2" Margin="8,8,8,8" Content="-" Click="btn_JogDecX_Click" Name="btn_MoveXJogDown" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
+          <Button Grid.Row="3" Grid.Column="2" Margin="8,8,8,8" Content="-" Click="btn_JogDecY_Click" Name="btn_MoveYJogDown" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
 
           <!--Jog increase-->
-          <Button Grid.Row="0" Grid.Column="4" Margin="8,8,8,8" Content="+" Click="btn_JogIncW_Click" Name="btn_MoveWJogUp" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
-          <Button Grid.Row="1" Grid.Column="4" Margin="8,8,8,8" Content="+" Click="btn_JogIncX_Click" Name="btn_MoveXJogUp" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
-          <Button Grid.Row="2" Grid.Column="4" Margin="8,8,8,8" Content="+" Click="btn_JogIncY_Click" Name="btn_MoveYJogUp" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
+          <Button Grid.Row="1" Grid.Column="4" Margin="8,8,8,8" Content="+" Click="btn_JogIncW_Click" Name="btn_MoveWJogUp" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
+          <Button Grid.Row="2" Grid.Column="4" Margin="8,8,8,8" Content="+" Click="btn_JogIncX_Click" Name="btn_MoveXJogUp" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
+          <Button Grid.Row="3" Grid.Column="4" Margin="8,8,8,8" Content="+" Click="btn_JogIncY_Click" Name="btn_MoveYJogUp" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
 
           <!--Sliders-->
-          <Slider Grid.Column="3" Grid.Row="0" Margin="2,2,2,2" VerticalAlignment="Center" HorizontalAlignment="Stretch" Name="sld_MoveW" IsSelectionRangeEnabled="True" 
+          <Slider Grid.Column="3" Grid.Row="1" Margin="2,2,2,2" VerticalAlignment="Center" HorizontalAlignment="Stretch" Name="sld_MoveW" IsSelectionRangeEnabled="True" 
               SmallChange="1" LargeChange="5" TickFrequency="1" IsSnapToTickEnabled="True" Thumb.DragCompleted="sld_MoveW_Release" Thumb.DragDelta="sld_MoveW_Dragging"/>
-          <Slider Grid.Column="3" Grid.Row="1" Margin="2,2,2,2" VerticalAlignment="Center" HorizontalAlignment="Stretch" Name="sld_MoveX" IsSelectionRangeEnabled="True" 
+          <Slider Grid.Column="3" Grid.Row="2" Margin="2,2,2,2" VerticalAlignment="Center" HorizontalAlignment="Stretch" Name="sld_MoveX" IsSelectionRangeEnabled="True" 
               SmallChange="1" LargeChange="5" TickFrequency="1" IsSnapToTickEnabled="True" Thumb.DragCompleted="sld_MoveX_Release" Thumb.DragDelta="sld_MoveX_Dragging"/>
-          <Slider Grid.Column="3" Grid.Row="2" Margin="2,2,2,2" VerticalAlignment="Center" HorizontalAlignment="Stretch" Name="sld_MoveY" IsSelectionRangeEnabled="True" 
+          <Slider Grid.Column="3" Grid.Row="3" Margin="2,2,2,2" VerticalAlignment="Center" HorizontalAlignment="Stretch" Name="sld_MoveY" IsSelectionRangeEnabled="True" 
               SmallChange="1" LargeChange="5" TickFrequency="1" IsSnapToTickEnabled="True" Thumb.DragCompleted="sld_MoveY_Release" Thumb.DragDelta="sld_MoveY_Dragging"/>
 
         </Grid>
@@ -218,7 +229,7 @@
 
       <!---Air func-->
       <Border 
-        Grid.Row="1" 
+        Grid.Row="2" 
         Grid.Column="2"
         Margin="2,2,4,2"
         BorderThickness="2" 
@@ -235,18 +246,38 @@
             <RowDefinition Height="*"/>
           </Grid.RowDefinitions>
 
-          <Label Grid.Row="0" Content="Piston:" Name="lbl_Piston" VerticalAlignment="Center" HorizontalAlignment="Left"/>
-          <Label Grid.Row="1" Content="Gripper:" Name="lbl_Gripper" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+          <Label 
+            Grid.Row="0" 
+            Content="Pneumatics" 
+            VerticalAlignment="Center" 
+            HorizontalAlignment="Center"
+            Grid.ColumnSpan="2" 
+            FontWeight="Bold"/>
+
+          <Label 
+            Grid.Row="1" 
+            Content="Piston:" 
+            Name="lbl_Piston" 
+            VerticalAlignment="Center" 
+            HorizontalAlignment="Left"/>
+          
+          <Label 
+            Grid.Row="2" 
+            Content="Gripper:" 
+            Name="lbl_Gripper" 
+            VerticalAlignment="Center"
+            HorizontalAlignment="Left"/>
 
           <Button 
             Grid.Column="1" 
+            Grid.Row="1"
             Content="DOWN" 
             Margin="2,2,2,2" 
             Click="btn_Piston_Click"
             Name="btn_Piston"
             />
           <Button 
-            Grid.Row="1" 
+            Grid.Row="2" 
             Grid.Column="1" 
             Content="CLOSE" 
             Click="btn_Gripper_Click"
@@ -254,22 +285,65 @@
             Margin="2,2,2,2" 
             />
 
-          <Label Grid.Column="0" Grid.Row="2" Content="Conveyor:" VerticalAlignment="Center" HorizontalAlignment="Left"/>
 
-          <Button 
-            Grid.Row="3"
+        </Grid>
+      </Border>
+
+      <!---Conveyor func-->
+      <Border 
+        Grid.Row="2" 
+        Grid.Column="1"
+        Margin="2,2,4,2"
+        BorderThickness="2" 
+        BorderBrush="CornflowerBlue">
+        <Grid>
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+          </Grid.ColumnDefinitions>
+          <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+          </Grid.RowDefinitions>
+
+          <Label 
+            Grid.Row="0" 
+            Content="Conveyor Belt" 
+            VerticalAlignment="Center" 
+            HorizontalAlignment="Center"
+            Grid.ColumnSpan="2" 
+            FontWeight="Bold"/>
+
+          <Label
             Grid.Column="0" 
-            Content="Forward" 
-            Margin="2,2,2,2" 
-            Click="btn_ConvFor_Click"
-            Name="btn_ConvFor"
-            />
+            Grid.Row="1" 
+            Content="Steps:" 
+            VerticalAlignment="Center" 
+            HorizontalAlignment="Left"/>
+
+          <Label
+            Grid.Column="0" 
+            Grid.Row="2" 
+            Content="Speed:" 
+            VerticalAlignment="Center" 
+            HorizontalAlignment="Left"/>
+
+          <TextBox
+            Name="txt_ConvSteps"
+            Grid.Row="1"
+            Grid.Column="1" 
+            VerticalAlignment="Stretch" 
+            HorizontalAlignment="Stretch"
+            Margin="2,2,2,2"/>
+
           <Button 
             Grid.Row="3" 
             Grid.Column="1" 
-            Content="Reverse" 
-            Click="btn_ConvBck_Click"
-            Name="btn_ConvBck"
+            Content="Run" 
+            Click="btn_ConvRun_Click"
+            Name="btn_ConvRun"
             Margin="2,2,2,2" 
             />
           <TextBox
@@ -278,7 +352,7 @@
             VerticalAlignment="Stretch" 
             HorizontalAlignment="Stretch"
             Margin="2,2,2,2" 
-            Name="txt_ConvDist"
+            Name="txt_ConvSpd"
             />
 
 
@@ -328,9 +402,17 @@
               <ColumnDefinition/>
               <ColumnDefinition/>
             </Grid.ColumnDefinitions>
+            
+            <Label 
+            Grid.Row="0" 
+            Content="Sequence" 
+            VerticalAlignment="Center" 
+            HorizontalAlignment="Center"
+            Grid.ColumnSpan="2" 
+            FontWeight="Bold"/>
 
             <Button 
-              Grid.Row="0"
+              Grid.Row="1"
               Grid.Column="0"
               Content="Move Up" 
               Margin="2,2,2,2" 
@@ -338,7 +420,7 @@
               Name="btn_ScriptUp"
             />
             <Button 
-              Grid.Row="0"
+              Grid.Row="1"
               Grid.Column="1"
               Content="Move Down" 
               Margin="2,2,2,2" 
@@ -346,7 +428,7 @@
               Name="btn_ScriptDown"
             />
             <Button 
-              Grid.Row="1"
+              Grid.Row="2"
               Grid.Column="0"
               Content="Remove" 
               Margin="2,2,2,2" 
@@ -354,7 +436,7 @@
               Name="btn_ScriptRemove"
             />
             <Button 
-              Grid.Row="1"
+              Grid.Row="2"
               Grid.Column="1"
               Content="Add" 
               Margin="2,2,2,2" 
@@ -362,7 +444,7 @@
               Name="btn_ScriptAdd"
             />
             <Button 
-              Grid.Row="2"
+              Grid.Row="3"
               Grid.Column="0"
               Content="Select" 
               Margin="2,2,2,2" 
@@ -370,7 +452,7 @@
               Name="btn_SelectScript"
             />
             <Button 
-              Grid.Row="2"
+              Grid.Row="3"
               Grid.Column="1"
               Content="Run" 
               Margin="2,2,2,2" 

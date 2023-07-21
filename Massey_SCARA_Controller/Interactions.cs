@@ -146,34 +146,48 @@ namespace Massey_SCARA_Controller
     {
       MovementHandler(Pose.Axis.Y, 0, (int)sld_MoveY.Value);
     }
-  #endregion
+    #endregion
 
-  #region Script functionality
+    #region Script functionality
 
-  private void btn_NewScript_Click(object sender, RoutedEventArgs e)
-  {
 
+    private void list_Sequence_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
+    {
+
+    }
+
+    private void btn_ScriptUp_Click(object sender, RoutedEventArgs e)
+    {
+
+    }
+
+    private void btn_ScriptDown_Click(object sender, RoutedEventArgs e)
+    {
+
+    }
+
+    private void btn_ScriptRemove_Click(object sender, RoutedEventArgs e)
+    {
+
+    }
+
+    private void btn_ScriptAdd_Click(object sender, RoutedEventArgs e)
+    {
+
+    }
+    private void btn_ConvRun_Click(object sender, RoutedEventArgs e)
+    {
+
+    }
+
+    private void btn_RunScript_Click(object sender, RoutedEventArgs e)
+    {
+
+    }
+    private void btn_SelectScript_Click(object sender, RoutedEventArgs e)
+    {
+
+    }
+    #endregion
   }
-
-  private void btn_SelectScript_Click(object sender, RoutedEventArgs e)
-  {
-
-  }
-
-  private void btn_RunScript_Click(object sender, RoutedEventArgs e)
-  {
-
-  }
-
-  private void btn_RemovePose_Click(object sender, RoutedEventArgs e)
-  {
-
-  }
-
-  private void btn_DeleteScript_Click(object sender, RoutedEventArgs e)
-  {
-
-  }
-  #endregion
- }
 }

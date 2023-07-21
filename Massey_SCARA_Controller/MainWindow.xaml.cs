@@ -161,39 +161,6 @@ namespace Massey_SCARA_Controller
             sld_MoveY.Value = Y;
         }
 
-    private void btn_ConvBck_Click(object sender, RoutedEventArgs e)
-    {
-
-    }
-
-    private void btn_ConvFor_Click(object sender, RoutedEventArgs e)
-    {
-
-    }
-
-        private void list_Sequence_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
-        {
-
-        }
-
-        private void btn_ScriptUp_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void btn_ScriptDown_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void btn_ScriptRemove_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void btn_ScriptAdd_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-    }
+    
+  }
 }
