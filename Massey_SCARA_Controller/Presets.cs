@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Data;
-using System.Windows.Automation.Peers;
+﻿using Newtonsoft.Json;
 using Serilog;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Windows;
+using System.Windows.Documents;
 
 
 // https://code-maze.com/introduction-system-text-json-examples/
@@ -14,20 +12,16 @@ using Serilog;
 
 namespace Massey_SCARA_Controller
 {
-  public partial class MainWindow : Window
-  {
-
-
-    string file_Presets = Environment.CurrentDirectory + "\\presets.json";
-    private class Preset
+  public class Step
     {
       public string Name = "New Pose";
       public string? Move;
       public string? Piston;
       public string? Gripper;
-      public string? Belt;
+      public string? Conveyor;
+      public string? Wait;
 
-      public Preset(){}
+      public Step(){}
       public List<string> GetList()
       {
         List<string> list = new List<string>();
@@ -35,20 +29,46 @@ namespace Massey_SCARA_Controller
         if (Move != null) list.Add(Move);
         if (Piston != null) list.Add(Piston);
         if (Gripper != null) list.Add(Gripper);
-        if (Belt != null) list.Add(Belt);
+        if (Conveyor != null) list.Add(Conveyor);
+        if (Wait != null) list.Add(Wait);
         return list;
       }
     }
 
-    private class Sequence
+    public class Sequence
     {
       public string Name = "New Sequence";
-      public List<Preset> List = new List<Preset>();
+      public List<Step> List = new List<Step>();
       public Sequence() { }
-      
-      public void Remove(string item)
+
+    public void SaveTo(string directory)
+    {
+      string json = JsonConvert.SerializeObject(this);
+      File.WriteAllText($"{directory}\\{Name}.json", json);
+    }
+    public bool InitFromFile(string file)
+    {
+      string json = File.ReadAllText(file);
+      Sequence? s;
+
+      try
       {
-        foreach (Preset p in List)
+        s = JsonConvert.DeserializeObject<Sequence>(json);
+        if (s == null) throw new Exception();
+      }
+      catch
+      {
+        return false;
+      }
+      Name = s.Name;
+      List = s.List;
+
+      return true;
+    }
+
+    public void Remove(string item)
+      {
+        foreach (Step p in List)
         {
           if (p.Name == item)
           {
@@ -57,7 +77,7 @@ namespace Massey_SCARA_Controller
           }
         }
       }
-      public void Add(Preset p)
+      public void Add(Step p)
       {
         List.Add(p); 
         return;
@@ -68,7 +88,7 @@ namespace Massey_SCARA_Controller
         if (!up && pos[0] + 1 >= pos[1]) return false; // cannot go beyond end of list
         if (up && pos[0] == 0) return false; // cannot go before start of list
 
-        Preset target = List[pos[0]];
+        Step target = List[pos[0]];
         int moveto = up ? pos[0] + 1 : pos[0] - 1;
         List[pos[0]] = List[pos[moveto]];
         List[pos[moveto]] = target;
@@ -90,6 +110,13 @@ namespace Massey_SCARA_Controller
       }
     }
 
+  public partial class MainWindow : Window
+  {
+    string dire_Sequences = Environment.CurrentDirectory + "\\sequences";
+
+    public Sequence? mySequence;
+
+
     #region Buffers
     private Buffer LocalCommandBuffer = new Buffer(90);
     private bool flag_CommandsWaiting_Local = false;
@@ -103,7 +130,7 @@ namespace Massey_SCARA_Controller
         flag_CommandsWaiting_Local = true;
 
         string command = LocalCommandBuffer.Acquire();
-        if (command.Contains("BELT"))
+        if (command.Contains("CONV"))
         {
           PORT_BELT_Send(command);
         }
@@ -131,7 +158,7 @@ namespace Massey_SCARA_Controller
     }
     #endregion
 
-    internal class Buffer
+    class Buffer
     {
       public enum Status { Empty, Available, Full };
       private string[] Instructions;

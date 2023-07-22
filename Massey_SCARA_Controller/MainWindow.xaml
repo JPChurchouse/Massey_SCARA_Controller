@@ -336,7 +336,8 @@
             Grid.Column="1" 
             VerticalAlignment="Stretch" 
             HorizontalAlignment="Stretch"
-            Margin="2,2,2,2"/>
+            Margin="2,2,2,2"
+            Text="100"/>
 
           <Button 
             Grid.Row="3" 
@@ -352,7 +353,17 @@
             VerticalAlignment="Stretch" 
             HorizontalAlignment="Stretch"
             Margin="2,2,2,2" 
-            Name="txt_ConvSpd"
+            Name="txt_ConvSpeed"
+            Text="100"
+            />
+          <CheckBox 
+            Grid.Row="3" 
+            Grid.Column="0" 
+            VerticalAlignment="Stretch" 
+            HorizontalAlignment="Stretch"
+            Margin="2,2,2,2"
+            Content="Reverse"
+            Name="chk_ConvReverse"
             />
 
 
@@ -465,6 +476,7 @@
             <ListView
               Name="list_Sequence" 
               MouseDoubleClick="list_Sequence_MouseDoubleClick"
+              SelectionChanged="list_Sequence_SelectionChanged"
               />
           </ScrollViewer>
         </Grid>

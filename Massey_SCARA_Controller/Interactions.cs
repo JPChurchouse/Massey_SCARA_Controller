@@ -173,7 +173,8 @@ namespace Massey_SCARA_Controller
 
     private void btn_ScriptAdd_Click(object sender, RoutedEventArgs e)
     {
-
+      SequnceWindow win = new SequnceWindow();
+      win.ShowDialog();
     }
     private void btn_ConvRun_Click(object sender, RoutedEventArgs e)
     {
@@ -186,6 +187,38 @@ namespace Massey_SCARA_Controller
     }
     private void btn_SelectScript_Click(object sender, RoutedEventArgs e)
     {
+
+    }
+
+    private void list_Sequence_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+    {
+      UpdateScriptPanel();
+    }
+
+
+    private void UpdateScriptPanel()
+    {
+      string? thing = list_Sequence.SelectedItem.ToString();
+      if (thing == null || mySequence == null)
+      {
+        btn_RunScript.IsEnabled = false;
+        btn_SelectScript.IsEnabled = true;
+        btn_ScriptRemove.IsEnabled = false;
+        btn_ScriptAdd.IsEnabled = true;
+        btn_ScriptUp.IsEnabled = false;
+        btn_ScriptDown.IsEnabled = false;
+      }
+      else
+      {
+        int[] ret = mySequence.GetIndex(thing);
+
+        btn_RunScript.IsEnabled = ret[1] > 0 ? true : false;
+        btn_SelectScript.IsEnabled = true;
+        btn_ScriptRemove.IsEnabled = list_Sequence.SelectedItem != null ? true : false;
+        btn_ScriptAdd.IsEnabled = true;
+        btn_ScriptUp.IsEnabled = ret[0] > 0 ? true : false;
+        btn_ScriptDown.IsEnabled = ret[0]+1 < ret[1] ? true : false;
+      }
 
     }
     #endregion
