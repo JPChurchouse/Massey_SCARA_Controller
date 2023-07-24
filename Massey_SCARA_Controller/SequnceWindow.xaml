@@ -29,11 +29,11 @@
       
       <CheckBox
         Grid.Row="0" 
-            Grid.Column="0" 
-            VerticalAlignment="Center" 
-            HorizontalAlignment="Stretch"
-            Margin="2,2,2,2"
-            Content="Name"
+        Grid.Column="0" 
+        VerticalAlignment="Center" 
+        HorizontalAlignment="Stretch"
+        Margin="2,2,2,2"
+        Content="Name"
         IsChecked="True"
         IsEnabled="False"
             />

@@ -1,0 +1,57 @@
+﻿<Window x:Class="Massey_SCARA_Controller.SelectWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Massey_SCARA_Controller"
+        mc:Ignorable="d"
+        Title="Select Sequence"
+        Height="250" 
+        Width="300" >
+    <Grid>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="5*"/>
+      <RowDefinition Height="*"/>
+    </Grid.RowDefinitions>
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition/>
+      <ColumnDefinition/>
+    </Grid.ColumnDefinitions>
+
+    <ScrollViewer
+        Grid.ColumnSpan="2">
+    <ListView
+        Grid.Row="0" 
+      Grid.Column="0"
+      Grid.ColumnSpan="2"
+        VerticalAlignment="Stretch" 
+        HorizontalAlignment="Stretch"
+        Margin="2,2,2,2"
+      Name="lst_Sequences"
+      Selected="lst_Sequences_Selected"
+        />
+      </ScrollViewer>
+  
+    <Button
+        Grid.Row="1" 
+      Grid.Column="0"
+        VerticalAlignment="Stretch" 
+        HorizontalAlignment="Stretch"
+        Margin="2,2,2,2"
+        Name="btn_Cancel"
+        Content="Cancel"
+      Click="btn_Cancel_Click"/>
+    <Button
+        Grid.Row="1" 
+      Grid.Column="1"
+        VerticalAlignment="Stretch" 
+        HorizontalAlignment="Stretch"
+        Margin="2,2,2,2"
+        Name="btn_Open"
+        Content="Open"
+        Click="btn_Open_Click"/>
+
+
+
+  </Grid>
+</Window>
