@@ -3,6 +3,7 @@ using Serilog;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -151,9 +152,9 @@ namespace Massey_SCARA_Controller
     #region Script functionality
 
 
-    private void list_Sequence_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
+    private void list_Sequence_MouseDoubleClick(object sender, MouseButtonEventArgs e)
     {
-
+      
     }
 
     private void btn_ScriptUp_Click(object sender, RoutedEventArgs e)
@@ -187,7 +188,22 @@ namespace Massey_SCARA_Controller
     }
     private void btn_SelectScript_Click(object sender, RoutedEventArgs e)
     {
+      string name = "";
+      SelectWindow win = new SelectWindow(dire_Sequences,ref name);
+      win.ShowDialog();
 
+      if (name == null) return;
+
+      foreach (string file in Directory.GetFiles(dire_Sequences))
+      {
+        if (file.Contains(name))
+        {
+          Sequence seq = new Sequence();
+          seq.InitFromFile(Environment.CurrentDirectory + $"\\{file}.json");
+          list_Sequence.Items.Add(seq.List);
+        }
+
+      }
     }
 
     private void list_Sequence_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)

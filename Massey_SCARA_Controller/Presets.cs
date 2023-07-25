@@ -13,27 +13,27 @@ using System.Windows.Documents;
 namespace Massey_SCARA_Controller
 {
   public class Step
-    {
-      public string Name = "New Pose";
-      public string? Move;
-      public string? Piston;
-      public string? Gripper;
-      public string? Conveyor;
-      public string? Wait;
+  {
+    public string Name = "New Pose";
+    public string? Move;
+    public string? Piston;
+    public string? Gripper;
+    public string? Conveyor;
+    public string? Wait;
 
-      public Step(){}
-      public List<string> GetList()
-      {
-        List<string> list = new List<string>();
-        if (Name != null) list.Add(Name);
-        if (Move != null) list.Add(Move);
-        if (Piston != null) list.Add(Piston);
-        if (Gripper != null) list.Add(Gripper);
-        if (Conveyor != null) list.Add(Conveyor);
-        if (Wait != null) list.Add(Wait);
-        return list;
-      }
+    public Step(){}
+    public List<string> GetList()
+    {
+      List<string> list = new List<string>();
+      if (Name != null) list.Add(Name);
+      if (Move != null) list.Add(Move);
+      if (Piston != null) list.Add(Piston);
+      if (Gripper != null) list.Add(Gripper);
+      if (Conveyor != null) list.Add(Conveyor);
+      if (Wait != null) list.Add(Wait);
+      return list;
     }
+  }
 
     public class Sequence
     {
@@ -66,49 +66,49 @@ namespace Massey_SCARA_Controller
       return true;
     }
 
-    public void Remove(string item)
+  public void Remove(string item)
+  {
+    foreach (Step p in List)
+    {
+      if (p.Name == item)
       {
-        foreach (Step p in List)
-        {
-          if (p.Name == item)
-          {
-            List.Remove(p);
-            return;
-          }
-        }
-      }
-      public void Add(Step p)
-      {
-        List.Add(p); 
+        List.Remove(p);
         return;
       }
-      public bool Move(string item, bool up = true)
-      {
-        int[] pos = GetIndex(item);
-        if (!up && pos[0] + 1 >= pos[1]) return false; // cannot go beyond end of list
-        if (up && pos[0] == 0) return false; // cannot go before start of list
+    }
+  }
+  public void Add(Step p)
+  {
+    List.Add(p); 
+    return;
+  }
+  public bool Move(string item, bool up = true)
+  {
+    int[] pos = GetIndex(item);
+    if (!up && pos[0] + 1 >= pos[1]) return false; // cannot go beyond end of list
+    if (up && pos[0] == 0) return false; // cannot go before start of list
 
-        Step target = List[pos[0]];
-        int moveto = up ? pos[0] + 1 : pos[0] - 1;
-        List[pos[0]] = List[pos[moveto]];
-        List[pos[moveto]] = target;
-        return true;
-      }
-      public int[] GetIndex(string item)
-      {
-        int[] ret = new int[2] {-1, List.Count };
+    Step target = List[pos[0]];
+    int moveto = up ? pos[0] + 1 : pos[0] - 1;
+    List[pos[0]] = List[pos[moveto]];
+    List[pos[moveto]] = target;
+    return true;
+  }
+  public int[] GetIndex(string item)
+  {
+    int[] ret = new int[2] {-1, List.Count };
 
-        for (int i = 0; i < List.Count; i++)
-        {
-          if (List[i].Name == item)
-          {
-            ret[0] = i;
-            break;
-          }
-        }
-        return ret;
+    for (int i = 0; i < List.Count; i++)
+    {
+      if (List[i].Name == item)
+      {
+        ret[0] = i;
+        break;
       }
     }
+    return ret;
+  }
+  }
 
   public partial class MainWindow : Window
   {
