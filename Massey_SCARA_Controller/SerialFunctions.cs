@@ -65,6 +65,7 @@ namespace Massey_SCARA_Controller
         if (data.Contains("RECEIVED")) 
         {
           LockoutEnd();
+          SendTxBuffer();
           return;
         }// Don't show the user the ECHO rx cmds
 
@@ -100,7 +101,7 @@ namespace Massey_SCARA_Controller
     if (data.Contains("RECEIVED"))
     {
      LockoutEnd();
-     return;
+      SendTxBuffer();
     }// Don't show the user the ECHO rx cmds
 
     LogMessage(data, MsgType.RXD);
@@ -221,7 +222,6 @@ namespace Massey_SCARA_Controller
 
           // Home all axies
           PORT_SCARA_Send("ECHO,1");
-          PORT_SCARA_Send("CLEAR");
           PORT_SCARA_Send("HOME");
         }
         else
@@ -236,110 +236,112 @@ namespace Massey_SCARA_Controller
       });
     }
 
-    // Disconnect Serial Port
-    private async void Disconnect()
+  // Disconnect Serial Port
+  private async void Disconnect()
+  {
+    try
     {
-      try
+      if (SERIALPORT_SCARA.IsOpen)
       {
-        if (SERIALPORT_SCARA.IsOpen)
-        {
-          LogMessage("Closing Serial Port", MsgType.SYS);
+        LogMessage("Closing Serial Port", MsgType.SYS);
 
-          PORT_SCARA_Send("STOP");
-          await Task.Delay(100);
-          PORT_SCARA_Send("CLEAR");
-          await Task.Delay(100);
+        PORT_SCARA_Send("STOP");
+        await Task.Delay(100);
+        PORT_SCARA_Send("CLEAR");
+        await Task.Delay(100);
 
-          SERIALPORT_SCARA.Close();
+        SERIALPORT_SCARA.Close();
 
-          LogMessage("Serial Port closed", MsgType.SYS);
-        }
-        else
-        {
-          LogMessage("Serial Port already closed", MsgType.SYS);
-        }
+        LogMessage("Serial Port closed", MsgType.SYS);
       }
-      catch (Exception exc)
-      {
-        Log.Error(exc.Message);
-        LogMessage("Error while closing Serial Port", MsgType.SYS);
-      }
-      finally
-      {
-        await Task.Delay(500);
-        Ui_UpdateConnectionStatus();
-      }
-
-      try
-      {
-        SERIALPORT_BELT.Close();
-      }
-      catch { }
-    }
-
-    // Process sending data on the Serial Port
-    private void PORT_SCARA_Send(string data)
-    {
-      if (!SERIALPORT_SCARA.IsOpen)
-      {
-        LogMessage("Connection error", MsgType.ALT);
-      }
-
-      else if (data == null || data == "")
-      {
-        LogMessage("Not content to send", MsgType.ALT);
-      }
-
-      else 
-      { 
-        LogMessage($"Sending: {data}", MsgType.TXD);
-        try
-        {
-          SERIALPORT_SCARA.WriteLine(data);
-          LockoutStart();
-        }
-        catch (Exception ex)
-        {
-          LogMessage("Unable to send command", MsgType.ALT);
-          Log.Error(ex.ToString());
-        }
-      }
-
-      Ui_UpdateConnectionStatus();
-    }
-
-    private void PORT_BELT_Send(string data)
-    {
-      if (!SERIALPORT_BELT.IsOpen)
-      {
-        LogMessage("Connection error", MsgType.ALT);
-      }
-
-      else if (data == null || data == "")
-      {
-        LogMessage("Not content to send", MsgType.ALT);
-      }
-
       else
       {
-        LogMessage($"Sending: {data}", MsgType.TXD);
-        try
-        {
-          SERIALPORT_BELT.WriteLine(data);
-          LockoutStart();
-        }
-        catch (Exception ex)
-        {
-          LogMessage("Unable to send command", MsgType.ALT);
-          Log.Error(ex.ToString());
-        }
+        LogMessage("Serial Port already closed", MsgType.SYS);
       }
-
+    }
+    catch (Exception exc)
+    {
+      Log.Error(exc.Message);
+      LogMessage("Error while closing Serial Port", MsgType.SYS);
+    }
+    finally
+    {
+      await Task.Delay(500);
       Ui_UpdateConnectionStatus();
     }
 
-    // Convert the COM Port message to a "COM x" string
-    private string ParsePortInfo(string info) { return info.Substring(info.LastIndexOf("(COM")).Replace("(", string.Empty).Replace(")", string.Empty); }
+    try
+    {
+      SERIALPORT_BELT.Close();
+    }
+    catch { }
+  }
+
+  // Process sending data on the Serial Port
+  private void PORT_SCARA_Send(string data)
+  {
+    if (!SERIALPORT_SCARA.IsOpen)
+    {
+      LogMessage("Connection error", MsgType.ALT);
+    }
+
+    else if (data == null || data == "")
+    {
+      LogMessage("Not content to send", MsgType.ALT);
+    }
+
+    else 
+    { 
+      LogMessage($"Sending: {data}", MsgType.TXD);
+      try
+      {
+        SERIALPORT_SCARA.WriteLine(data);
+        LockoutStart();
+          if (Recording) scriptHandler.Append(data);
+      }
+      catch (Exception ex)
+      {
+        LogMessage("Unable to send command", MsgType.ALT);
+        Log.Error(ex.ToString());
+      }
+    }
+
+    Ui_UpdateConnectionStatus();
+  }
+
+  private void PORT_BELT_Send(string data)
+  {
+    if (!SERIALPORT_BELT.IsOpen)
+    {
+      LogMessage("Connection error", MsgType.ALT);
+    }
+
+    else if (data == null || data == "")
+    {
+      LogMessage("Not content to send", MsgType.ALT);
+    }
+
+    else
+    {
+      LogMessage($"Sending: {data}", MsgType.TXD);
+      try
+      {
+        SERIALPORT_BELT.WriteLine(data);
+        LockoutStart();
+          if (Recording) scriptHandler.Append(data);
+        }
+      catch (Exception ex)
+      {
+        LogMessage("Unable to send command", MsgType.ALT);
+        Log.Error(ex.ToString());
+      }
+    }
+
+    Ui_UpdateConnectionStatus();
+  }
+
+  // Convert the COM Port message to a "COM x" string
+  private string ParsePortInfo(string info) { return info.Substring(info.LastIndexOf("(COM")).Replace("(", string.Empty).Replace(")", string.Empty); }
 
 
     // LOCKOUT

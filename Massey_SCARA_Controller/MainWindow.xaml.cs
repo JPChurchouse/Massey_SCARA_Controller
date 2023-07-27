@@ -160,7 +160,5 @@ namespace Massey_SCARA_Controller
             sld_MoveY.Minimum = Settings.Default.min_Y;
             sld_MoveY.Value = Y;
         }
-
-    
-  }
+    }
 }

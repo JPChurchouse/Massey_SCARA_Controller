@@ -151,59 +151,45 @@ namespace Massey_SCARA_Controller
 
     #region Script functionality
 
+    private void btn_ConvRun_Click(object sender, RoutedEventArgs e)
+    {
+      PORT_BELT_Send($"CONV,{txt_ConvSteps},{((bool)chk_ConvReverse.IsChecked ? "1":"0")},{txt_ConvSpeed}");
+    }
 
     private void list_Sequence_MouseDoubleClick(object sender, MouseButtonEventArgs e)
     {
       
     }
 
-    private void btn_ScriptUp_Click(object sender, RoutedEventArgs e)
+    private bool Recording = false;
+    private void btn_RecordScript_Click(object sender, RoutedEventArgs e)
     {
-
+      if (btn_RecordScript.Content.ToString().Contains("Record"))
+      {
+        btn_RecordScript.Content = "Stop";
+        Recording = true;
+      }
+      else
+      {
+        btn_RecordScript.Content = "Record";
+        Recording = false;
+      }
     }
 
-    private void btn_ScriptDown_Click(object sender, RoutedEventArgs e)
+    private void btn_ClearScript_Click(object sender, RoutedEventArgs e)
     {
-
+      scriptHandler.List.Clear();
     }
 
-    private void btn_ScriptRemove_Click(object sender, RoutedEventArgs e)
-    {
-
-    }
-
-    private void btn_ScriptAdd_Click(object sender, RoutedEventArgs e)
-    {
-      SequnceWindow win = new SequnceWindow();
-      win.ShowDialog();
-    }
-    private void btn_ConvRun_Click(object sender, RoutedEventArgs e)
-    {
-
-    }
 
     private void btn_RunScript_Click(object sender, RoutedEventArgs e)
     {
-
+      AddToTxBuffer(scriptHandler.GetMachineList());
+      SendTxBuffer();
     }
     private void btn_SelectScript_Click(object sender, RoutedEventArgs e)
     {
-      string name = "";
-      SelectWindow win = new SelectWindow(dire_Sequences,ref name);
-      win.ShowDialog();
-
-      if (name == null) return;
-
-      foreach (string file in Directory.GetFiles(dire_Sequences))
-      {
-        if (file.Contains(name))
-        {
-          Sequence seq = new Sequence();
-          seq.InitFromFile(Environment.CurrentDirectory + $"\\{file}.json");
-          list_Sequence.Items.Add(seq.List);
-        }
-
-      }
+      scriptHandler.SelectFile();
     }
 
     private void list_Sequence_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
@@ -214,27 +200,7 @@ namespace Massey_SCARA_Controller
 
     private void UpdateScriptPanel()
     {
-      string? thing = list_Sequence.SelectedItem.ToString();
-      if (thing == null || mySequence == null)
-      {
-        btn_RunScript.IsEnabled = false;
-        btn_SelectScript.IsEnabled = true;
-        btn_ScriptRemove.IsEnabled = false;
-        btn_ScriptAdd.IsEnabled = true;
-        btn_ScriptUp.IsEnabled = false;
-        btn_ScriptDown.IsEnabled = false;
-      }
-      else
-      {
-        int[] ret = mySequence.GetIndex(thing);
 
-        btn_RunScript.IsEnabled = ret[1] > 0 ? true : false;
-        btn_SelectScript.IsEnabled = true;
-        btn_ScriptRemove.IsEnabled = list_Sequence.SelectedItem != null ? true : false;
-        btn_ScriptAdd.IsEnabled = true;
-        btn_ScriptUp.IsEnabled = ret[0] > 0 ? true : false;
-        btn_ScriptDown.IsEnabled = ret[0]+1 < ret[1] ? true : false;
-      }
 
     }
     #endregion

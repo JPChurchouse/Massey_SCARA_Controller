@@ -397,14 +397,13 @@
         BorderBrush="CornflowerBlue">
         <Grid>
           <Grid.RowDefinitions>
-            <RowDefinition/>
-            <RowDefinition/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="2*"/>
           </Grid.RowDefinitions>
 
 
-          <Grid Grid.Row="1">
+          <Grid Grid.Row="0">
             <Grid.RowDefinitions>
-              <RowDefinition/>
               <RowDefinition/>
               <RowDefinition/>
               <RowDefinition/>
@@ -423,57 +422,42 @@
             FontWeight="Bold"/>
 
             <Button 
-              Grid.Row="1"
-              Grid.Column="0"
-              Content="Move Up" 
-              Margin="2,2,2,2" 
-              Click="btn_ScriptUp_Click"
-              Name="btn_ScriptUp"
-            />
-            <Button 
-              Grid.Row="1"
-              Grid.Column="1"
-              Content="Move Down" 
-              Margin="2,2,2,2" 
-              Click="btn_ScriptDown_Click"
-              Name="btn_ScriptDown"
-            />
-            <Button 
-              Grid.Row="2"
-              Grid.Column="0"
-              Content="Remove" 
-              Margin="2,2,2,2" 
-              Click="btn_ScriptRemove_Click"
-              Name="btn_ScriptRemove"
-            />
-            <Button 
               Grid.Row="2"
               Grid.Column="1"
-              Content="Add" 
+              Content="Execute" 
               Margin="2,2,2,2" 
-              Click="btn_ScriptAdd_Click"
-              Name="btn_ScriptAdd"
+              Click="btn_RunScript_Click"
+              Name="btn_RunScript"
             />
             <Button 
-              Grid.Row="3"
+              Grid.Row="1"
               Grid.Column="0"
-              Content="Select" 
+              Content="Open" 
               Margin="2,2,2,2" 
               Click="btn_SelectScript_Click"
               Name="btn_SelectScript"
             />
             <Button 
-              Grid.Row="3"
+              Grid.Row="1"
               Grid.Column="1"
-              Content="Run" 
+              Content="Record" 
               Margin="2,2,2,2" 
-              Click="btn_RunScript_Click"
-              Name="btn_RunScript"
+              Name="btn_RecordScript"
+              Click="btn_RecordScript_Click"
+            />
+            <Button 
+              Grid.Row="2"
+              Grid.Column="0"
+              Content="Clear" 
+              Margin="2,2,2,2"
+              Name="btn_ClearScript"
+              Click="btn_ClearScript_Click"
             />
           </Grid>
 
-          <ScrollViewer>
+          <ScrollViewer Grid.Row="1">
             <ListView
+              
               Name="list_Sequence" 
               MouseDoubleClick="list_Sequence_MouseDoubleClick"
               SelectionChanged="list_Sequence_SelectionChanged"
