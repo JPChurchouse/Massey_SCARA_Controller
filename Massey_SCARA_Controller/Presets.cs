@@ -196,15 +196,15 @@ namespace Massey_SCARA_Controller
       {
         index_write = 0;
         index_read = 0;
-        for (int i = 0; i < size; i++) Instructions[i] = null;
+        for (int i = 0; i < size; i++) Instructions[i] = "";
       }
 
       // Read next instruction
       public string Acquire()
       {
-        if (status() == Status.Empty) return null;
+        if (status() == Status.Empty) return "";
         string cmd = Instructions[index_read];
-        Instructions[index_read++] = null;
+        Instructions[index_read++] = "";
         if (index_read >= size) index_read = 0;
         return cmd; ;
       }
