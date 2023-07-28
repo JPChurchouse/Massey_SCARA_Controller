@@ -150,12 +150,6 @@ namespace Massey_SCARA_Controller
     #endregion
 
     #region Script functionality
-
-    private void btn_ConvRun_Click(object sender, RoutedEventArgs e)
-    {
-      PORT_BELT_Send($"CONV,{txt_ConvSteps},{((bool)chk_ConvReverse.IsChecked ? "1":"0")},{txt_ConvSpeed}");
-    }
-
     private void list_Sequence_MouseDoubleClick(object sender, MouseButtonEventArgs e)
     {
       
@@ -203,6 +197,15 @@ namespace Massey_SCARA_Controller
 
 
     }
-    #endregion
-  }
+        private void btn_BeltRev_Click(object sender, RoutedEventArgs e)
+        {
+            PORT_BELT_Send($"{Settings.Default.conv_For},{Settings.Default.conv_Dist}");
+        }
+
+        private void btn_BeltFor_Click(object sender, RoutedEventArgs e)
+        {
+            PORT_BELT_Send($"{Settings.Default.conv_Rev},{Settings.Default.conv_Dist}");
+        }
+        #endregion
+    }
 }

@@ -315,56 +315,25 @@
             HorizontalAlignment="Center"
             Grid.ColumnSpan="2" 
             FontWeight="Bold"/>
-
-          <Label
-            Grid.Column="0" 
+          <Button
             Grid.Row="1" 
-            Content="Steps:" 
-            VerticalAlignment="Center" 
-            HorizontalAlignment="Left"/>
-
-          <Label
-            Grid.Column="0" 
-            Grid.Row="2" 
-            Content="Speed:" 
-            VerticalAlignment="Center" 
-            HorizontalAlignment="Left"/>
-
-          <TextBox
-            Name="txt_ConvSteps"
-            Grid.Row="1"
-            Grid.Column="1" 
+            Grid.Column="0"
+            Content="Reverse" 
             VerticalAlignment="Stretch" 
             HorizontalAlignment="Stretch"
-            Margin="2,2,2,2"
-            Text="100"/>
+            Name="btn_BeltRev"
+            Click="btn_BeltRev_Click"
+            />
+          <Button
+            Grid.Row="1" 
+            Grid.Column="1"
+            Content="Forward" 
+            VerticalAlignment="Stretch" 
+            HorizontalAlignment="Stretch"
+            Name="btn_BeltFor"
+            Click="btn_BeltFor_Click"
+            />
 
-          <Button 
-            Grid.Row="3" 
-            Grid.Column="1" 
-            Content="Run" 
-            Click="btn_ConvRun_Click"
-            Name="btn_ConvRun"
-            Margin="2,2,2,2" 
-            />
-          <TextBox
-            Grid.Row="2" 
-            Grid.Column="1" 
-            VerticalAlignment="Stretch" 
-            HorizontalAlignment="Stretch"
-            Margin="2,2,2,2" 
-            Name="txt_ConvSpeed"
-            Text="100"
-            />
-          <CheckBox 
-            Grid.Row="3" 
-            Grid.Column="0" 
-            VerticalAlignment="Stretch" 
-            HorizontalAlignment="Stretch"
-            Margin="2,2,2,2"
-            Content="Reverse"
-            Name="chk_ConvReverse"
-            />
 
 
         </Grid>

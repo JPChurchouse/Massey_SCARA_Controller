@@ -204,13 +204,15 @@ namespace Massey_SCARA_Controller
         if (port_SCARA_connected)
         {
           Log.Debug($"Baudrate: {SERIALPORT_SCARA.BaudRate}");
-          // Play alarm
+          /*
+              // Play alarm
           MediaPlayer player = new MediaPlayer();
           if (Settings.Default.alarm) 
           {
-            player.Open(new Uri("alarm.mp3"));
+            player.Open(new Uri("\\alarm.mp3"));
             player.Play();
           }
+          */
 
           // Show warning
           LogMessage("WARNING - SCARA ACTIVE", MsgType.ALT);
@@ -218,7 +220,7 @@ namespace Massey_SCARA_Controller
             "The SCARA is about to become active. Press \"OK\" to proceed when the area is safe.",
             "⚠️ WARNING ⚠️");
 
-          player.Close();
+          //player.Close();
 
           // Home all axies
           PORT_SCARA_Send("ECHO,1");

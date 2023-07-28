@@ -24,6 +24,7 @@ namespace Massey_SCARA_Controller
 
       public string Name = "";
       public string Value = "";
+      public bool Conveyor = false;
     }
 
     private ScriptHandler scriptHandler = new ScriptHandler();
