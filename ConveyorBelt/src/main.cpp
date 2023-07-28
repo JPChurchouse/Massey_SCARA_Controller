@@ -1,19 +1,17 @@
 #include <Arduino.h>
 #include <Stepper.h>
-#include <HX711.h>
 #include <TimerOne.h>
 
 
 // Master globals
 void ProcessCommand(String);
-void Start(bool b = false);
-void Stop(bool b = false);
-
 // Conveyor belt globals
 const uint8_t   pin_conv_pulse = 3; // PUL- pin
 const uint8_t   pin_conv_dir = 2;   // DIR- pin
 const uint8_t   conv_dir = 1;       // Set Direction
-void SetBeltSpeed(int);
+uint32_t conv_count = 0;
+uint16_t conv_period = 200;
+bool conv_reverse = false;
 void ISR_DriveBelt();
 
 
@@ -29,9 +27,10 @@ void setup()
   pinMode (pin_conv_dir, OUTPUT);       // Direction pin as output
   digitalWrite(pin_conv_dir,conv_dir);  // Direction pin write high
   
-  Timer1.initialize(1000000);           // Init conveyor timer with garbage
+  Timer1.initialize(conv_period);           // Init conveyor timer with garbage
   Timer1.attachInterrupt(ISR_DriveBelt);// Attatch ISR
-  Timer1.stop();                        // Stow timer for now
+  Timer1.setPeriod(conv_period);
+  Timer1.start();
 }
 
 // Main loop
@@ -41,69 +40,61 @@ void loop()
   if (Serial.available()) ProcessCommand(Serial.readStringUntil('\n'));
 }
 
-
-// Start and stop the conveyor sequence
-void Start(bool announce = false)
-{
-  nut_current = 0;
-  nut_stopped = false;
-  SetBeltSpeed(2);
-  if (announce) Serial.println("STARTED");
-}
-void Stop(bool announce = false)
-{
-  SetBeltSpeed(0);
-  if (announce) Serial.println("STOPPED");
-  delay(300);
-}
-
-// Update the belt speed
-void SetBeltSpeed(int spd)
-{
-  switch (spd)
-  {
-    case 1 : 
-      Timer1.setPeriod(200); 
-      Serial.println("CONV 1");
-      break;
-    
-    case 2 : 
-      Timer1.setPeriod(100); 
-      Serial.println("CONV 2");
-      break;
-    
-    case 0 :
-    default: 
-      Timer1.stop(); 
-      Serial.println("CONV 0");
-      return;
-  }
-  Timer1.start();
-}
-
 // Belt drive ISR
-void ISR_DriveBelt() { digitalWrite(pin_conv_pulse,!digitalRead(pin_conv_pulse)); }
+void ISR_DriveBelt() 
+{ 
+  if (conv_count == 0) return;
+
+  digitalWrite(
+    pin_conv_dir,
+    conv_reverse ? 0 : 1);
+
+  digitalWrite(
+    pin_conv_pulse, 
+    !digitalRead(pin_conv_pulse));
+
+  if (--conv_count == 0) Serial.println("DONE");
+}
 
 // Process commands from Serial
 void ProcessCommand(String msg)
 {
+  String message = "";
+  String tempnum = "";
+  int number = 0;
+
+  int index = msg.indexOf(",");              // locate the first ","
+  message += msg.substring(0, index).c_str(); // Extract the string from start to the ","
+  tempnum += msg.substring(index + 1).c_str();        // Remove what was before the "," from the string
+  number = tempnum.toInt();
+
   msg.replace("\r", "");
   msg.replace("\n", "");
+  
 
   // Stop
-  if (msg == "STOP") Stop(true);
+  if (message == "STOP")
+  {
+    conv_count = 0;
+    Serial.println("STOP");
+  }
 
-  // Ping Pong
-  else if (msg == "PING") Serial.println("PONG");
+  else if (message == "FOR")
+  {
+    conv_count = number*100;
+    conv_reverse = false;
+    Serial.println("FOR " + String(number));
+  }
 
-  // Conveyor belt
-  else if (msg == "CONV,0") SetBeltSpeed(0);
-  else if (msg == "CONV,1") SetBeltSpeed(1);
-  else if (msg == "CONV,2") SetBeltSpeed(2);
-  // Start the system
-  else if (msg == "START") Start(true);
+  else if (message == "REV") 
+  {
+    conv_count = number*100;
+    conv_reverse = true;
+    Serial.println("REV " + String(number));
+  }
 
-
-  // unknown
-  else Serial.println("NACK");
+  else 
+  {
+    Serial.println("NACK");
+    }
 }
