@@ -75,13 +75,13 @@
       <Value Profile="(Default)">100</Value>
     </Setting>
     <Setting Name="conv_For" Type="System.String" Scope="User">
-      <Value Profile="(Default)">F</Value>
+      <Value Profile="(Default)">FOR</Value>
     </Setting>
     <Setting Name="conv_Rev" Type="System.String" Scope="User">
-      <Value Profile="(Default)">R</Value>
+      <Value Profile="(Default)">REV</Value>
     </Setting>
-    <Setting Name="conv_Dist" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">500</Value>
+    <Setting Name="conv_Dist" Type="System.UInt16" Scope="User">
+      <Value Profile="(Default)">80</Value>
     </Setting>
   </Settings>
 </SettingsFile>

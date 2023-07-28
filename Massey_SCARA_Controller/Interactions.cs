@@ -112,6 +112,14 @@ namespace Massey_SCARA_Controller
 
     #region Movement handlers
 
+    private void btn_Wait_Click(object sender, RoutedEventArgs e)
+    {
+      if (Validate(txt_Wait.Text, 1, 10000, out int hello))
+      {
+        PORT_SCARA_Send($"WAIT,{hello}");
+      }
+    }
+
     // Jog buttons
     private void btn_JogIncW_Click(object sender, RoutedEventArgs e) { MovementHandler(Pose.Axis.W, +1); }
     private void btn_JogIncX_Click(object sender, RoutedEventArgs e) { MovementHandler(Pose.Axis.X, +1); }
@@ -167,45 +175,50 @@ namespace Massey_SCARA_Controller
       {
         btn_RecordScript.Content = "Record";
         Recording = false;
+        scriptHandler.Export();
+        UpdateScriptPanel();
       }
     }
 
     private void btn_ClearScript_Click(object sender, RoutedEventArgs e)
     {
       scriptHandler.List.Clear();
+      UpdateScriptPanel();
     }
 
 
     private void btn_RunScript_Click(object sender, RoutedEventArgs e)
     {
-      AddToTxBuffer(scriptHandler.GetMachineList());
-      SendTxBuffer();
+      _ = SendCommandList(scriptHandler.List);
     }
     private void btn_SelectScript_Click(object sender, RoutedEventArgs e)
     {
       scriptHandler.SelectFile();
+      UpdateScriptPanel();
     }
 
     private void list_Sequence_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
     {
+    }
+
+    private void btn_NewScript_Click(object sender, RoutedEventArgs e)
+    {
+      scriptHandler.MakeNew(txt_NewScript.Text);
       UpdateScriptPanel();
     }
 
 
-    private void UpdateScriptPanel()
+    #endregion
+    #region Conveyor Belt
+    private void btn_BeltRev_Click(object sender, RoutedEventArgs e)
     {
-
-
+        PORT_BELT_Send($"{Settings.Default.conv_For},{Settings.Default.conv_Dist}");
     }
-        private void btn_BeltRev_Click(object sender, RoutedEventArgs e)
-        {
-            PORT_BELT_Send($"{Settings.Default.conv_For},{Settings.Default.conv_Dist}");
-        }
 
-        private void btn_BeltFor_Click(object sender, RoutedEventArgs e)
-        {
-            PORT_BELT_Send($"{Settings.Default.conv_Rev},{Settings.Default.conv_Dist}");
-        }
+    private void btn_BeltFor_Click(object sender, RoutedEventArgs e)
+    {
+        PORT_BELT_Send($"{Settings.Default.conv_Rev},{Settings.Default.conv_Dist}");
+    }
         #endregion
     }
 }

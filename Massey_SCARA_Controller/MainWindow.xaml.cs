@@ -108,7 +108,7 @@ namespace Massey_SCARA_Controller
             this.Dispatcher.Invoke(() =>
             {
                 // Calculate the new font size
-                int s = ( (int)this.Width/8 + (int)this.Height*4 ) / 100;
+                int s = ( (int)this.Width/7 + (int)this.Height*3 ) / 100;
                 Log.Debug($"Resize H: {this.Height} W: {this.Width} S: {s}");
 
                 btn_Connect.FontSize = s;
@@ -133,10 +133,29 @@ namespace Massey_SCARA_Controller
                 btn_MoveYJogDown.FontSize = s;
                 btn_MoveYJogUp.FontSize = s;
                 
+              lbl_Sequence.FontSize = s;
+              btn_SelectScript.FontSize = s;
+              btn_RecordScript.FontSize = s;
+              btn_ClearScript.FontSize = s;
+              btn_RunScript.FontSize = s;
+              lbl_Conveyor.FontSize = s;
+              btn_BeltFor.FontSize = s;
+              btn_BeltRev.FontSize = s;
+              btn_Wait.FontSize = s;
+              txt_Wait.FontSize = s;
+              lbl_Movement.FontSize = s;
+              btn_NewScript.FontSize = s;
+              txt_NewScript.FontSize = s;
+              lbl_Pneumantics.FontSize = s;
+              lbl_Wait.FontSize = s;
+
+
+
 
                 text_OuputLog.FontSize = s * 2 / 3;
+              list_Sequence.FontSize = s * 2 / 3;
 
-                btn_EmergencyStop.FontSize = s * 3;
+              btn_EmergencyStop.FontSize = s * 3;
             });
         }
 
@@ -161,6 +180,6 @@ namespace Massey_SCARA_Controller
             sld_MoveY.Value = Y;
         }
 
-        
-    }
+    
+  }
 }

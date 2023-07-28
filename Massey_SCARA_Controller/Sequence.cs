@@ -18,20 +18,12 @@ namespace Massey_SCARA_Controller
 {
   public partial class MainWindow : Window
   {
-    private struct Step
-    {
-      public Step() { }
 
-      public string Name = "";
-      public string Value = "";
-      public bool Conveyor = false;
-    }
-
-    private ScriptHandler scriptHandler = new ScriptHandler();
+    private ScriptHandler scriptHandler = new ScriptHandler(Environment.CurrentDirectory + "\\sequences\\my_sequence.json");
     private class ScriptHandler
     {
       public ScriptHandler() { }
-      public ScriptHandler(string filepath) 
+      public ScriptHandler(string filepath)
       {
         this.FilePath = filepath;
         Import();
@@ -41,7 +33,7 @@ namespace Massey_SCARA_Controller
       {
         if (filepath != "") FilePath = filepath;
         if (!File.Exists(FilePath)) return;
-        
+
         string json = File.ReadAllText(FilePath);
         if (json == null) return;
 
@@ -66,7 +58,7 @@ namespace Massey_SCARA_Controller
         if (filepath != "") FilePath = filepath;
 
         string json = JsonConvert.SerializeObject(this);
-        File.WriteAllText(filepath, json);
+        File.WriteAllText(FilePath, json);
       }
       public void SelectFile()
       {
@@ -84,166 +76,76 @@ namespace Massey_SCARA_Controller
       }
 
       private string FilePath = "";
-      public List<Step> List = new List<Step>();
-      public string[] GetUserFriendlyList()
-      {
-        List<string> list = new List<string>();
-        foreach (var step in this.List)
-        {
-          list.Add(step.Name);
-        }
-        return list.ToArray();
-      }
+      public List<string> List = new List<string>();
       public string[] GetMachineList()
       {
         List<string> list = new List<string>();
         foreach (var step in this.List)
         {
-          list.Add(step.Value);
+          list.Add(step);
         }
         return list.ToArray();
       }
       public void MakeNew(string name)
       {
-        throw new NotImplementedException();
+        Export();
+        List.Clear();
+        FilePath = Environment.CurrentDirectory + $"\\sequences\\{name}.json";
       }
 
-      public void Append(string data)
+      public void Append(string command)
       {
-        Step step = new Step();
-        step.Value = data;
-        
-        if (data.Contains("MOVE"))
+        if (command.Contains("MOVE"))
         {
-          step.Name = "Movement";
+          int end = List.Count - 1;
+          if (List[end].Contains("MOVE"))
+          {
+            List[end] = command;
+            return;
+          }
         }
-        else if (data.Contains("AIR"))
+
+        this.List.Add(command);
+      }
+    }
+
+    private void RecordThisStep(string command)
+    {
+      if (!Recording) return;
+      scriptHandler.Append(command);
+      UpdateScriptPanel();
+    }
+
+    private async Task SendCommandList(List<string> list)
+    {
+      Ui_SetControlsEnabled(false);
+
+      foreach (var step in list)
+      {
+        if (
+          step.Contains(Properties.Settings.Default.conv_For) || 
+          step.Contains(Properties.Settings.Default.conv_Rev))
         {
-          step.Name = "Pneumatic";
-        }
-        else if(data.Contains("CONV"))
-        {
-          step.Name = "Conveyor";
+          PORT_BELT_Send(step);
         }
         else
         {
-          step.Name = "err";
+          PORT_SCARA_Send(step);
+          await Task.Delay(500);
         }
-        this.List.Add(step);
       }
+
+      Ui_SetControlsEnabled(true);
+      return;
     }
 
-    private void SequenceEnd()
+    private void UpdateScriptPanel()
     {
-
-    }
-
-
-    #region Buffer
-
-    internal class Buffer
-    {
-      public enum Status { Empty, Available, Full };
-      private string[] Instructions;
-      private int size = 10;
-      private int index_read = 0; // Index to read next cmd from
-      private int index_write = 0; // Index to write next cmd to
-
-      // Create buffer
-      public Buffer(int _size)
+      list_Sequence.Items.Clear();
+      foreach(string item in scriptHandler.List)
       {
-        size = _size;
-        Instructions = new string[size];
-        Reset();
-      }
-
-      // Append and instruction
-      public bool Append(string what)
-      {
-        // If the string is null or the buffer is full, return fail
-        if (what == null || status() == Status.Full) return false;
-
-        // Add the instruction and increment the write buffer
-        Instructions[index_write] = what;
-        index_write++;
-
-        // Return write index to 0 if at end
-        if (index_write >= size) index_write = 0;
-
-        // Return success
-        return true;
-      }
-
-      // Reset
-      public void Reset()
-      {
-        index_write = 0;
-        index_read = 0;
-        for (int i = 0; i < size; i++) Instructions[i] = null;
-      }
-
-      // Read next instruction
-      public string Acquire()
-      {
-        if (status() == Status.Empty) return null;
-        string cmd = Instructions[index_read];
-        Instructions[index_read++] = null;
-        if (index_read >= size) index_read = 0;
-        return cmd; ;
-      }
-
-      // Get status of buffer
-      public Status status()
-      {
-        if (index_read == index_write)
-        {
-          if (Instructions[index_read] == null) return Status.Empty;
-          else return Status.Full;
-        }
-        else return Status.Available;
+        list_Sequence.Items.Add(item);
       }
     }
-
-    private Buffer LocalCommandBuffer = new Buffer(64);
-    private bool flag_CommandsWaiting_Local = false;
-    private bool flag_CommandsWaiting_Controller = false;
-    private void SendTxBuffer()
-    {
-      Log.Debug("Sending TX buffer");
-      if (LocalCommandBuffer.status() == Buffer.Status.Empty)
-      {
-        Log.Debug("TX buffer empty");
-        flag_CommandsWaiting_Local = false;
-        SequenceEnd();
-        return;
-      }
-
-      string info = LocalCommandBuffer.Acquire();
-      if (info.Contains("Conv"))
-      {
-        PORT_BELT_Send(info);
-      }
-      else
-      {
-        PORT_SCARA_Send(info);
-      }
-
-      flag_CommandsWaiting_Controller = true;
-      flag_CommandsWaiting_Local = LocalCommandBuffer.status() != Buffer.Status.Empty;
-    }
-
-    // Add a command to the buffer ready to be sent to the controller
-    private void AddToTxBuffer(string cmd)
-    {
-      if (cmd == null || cmd == "") return;
-      LocalCommandBuffer.Append(cmd);
-      flag_CommandsWaiting_Local = true;
-    }
-    private void AddToTxBuffer(string[] cmds)
-    {
-      for (int i = 0; i < cmds.Length; i++)
-        AddToTxBuffer(cmds[i]);
-    }
-    #endregion
   }
 }

@@ -65,7 +65,6 @@ namespace Massey_SCARA_Controller
         if (data.Contains("RECEIVED")) 
         {
           LockoutEnd();
-          SendTxBuffer();
           return;
         }// Don't show the user the ECHO rx cmds
 
@@ -101,7 +100,6 @@ namespace Massey_SCARA_Controller
     if (data.Contains("RECEIVED"))
     {
      LockoutEnd();
-      SendTxBuffer();
     }// Don't show the user the ECHO rx cmds
 
     LogMessage(data, MsgType.RXD);
@@ -299,7 +297,7 @@ namespace Massey_SCARA_Controller
       {
         SERIALPORT_SCARA.WriteLine(data);
         LockoutStart();
-          if (Recording) scriptHandler.Append(data);
+        RecordThisStep(data);
       }
       catch (Exception ex)
       {
@@ -330,7 +328,7 @@ namespace Massey_SCARA_Controller
       {
         SERIALPORT_BELT.WriteLine(data);
         LockoutStart();
-          if (Recording) scriptHandler.Append(data);
+        RecordThisStep(data);
         }
       catch (Exception ex)
       {

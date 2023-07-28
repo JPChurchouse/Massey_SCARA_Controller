@@ -313,7 +313,7 @@ namespace Massey_SCARA_Controller.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("F")]
+        [global::System.Configuration.DefaultSettingValueAttribute("FOR")]
         public string conv_For {
             get {
                 return ((string)(this["conv_For"]));
@@ -325,7 +325,7 @@ namespace Massey_SCARA_Controller.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("R")]
+        [global::System.Configuration.DefaultSettingValueAttribute("REV")]
         public string conv_Rev {
             get {
                 return ((string)(this["conv_Rev"]));
@@ -337,10 +337,10 @@ namespace Massey_SCARA_Controller.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("500")]
-        public int conv_Dist {
+        [global::System.Configuration.DefaultSettingValueAttribute("80")]
+        public ushort conv_Dist {
             get {
-                return ((int)(this["conv_Dist"]));
+                return ((ushort)(this["conv_Dist"]));
             }
             set {
                 this["conv_Dist"] = value;
