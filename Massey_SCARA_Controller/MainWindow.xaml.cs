@@ -94,9 +94,35 @@ namespace Massey_SCARA_Controller
         {
             this.Dispatcher.Invoke(() =>
             {
+                if (Seq_Executing) enabled = false;
+
+
                 Log.Debug($"Set enabled: {enabled}");
-                panel_Inputs.IsEnabled = enabled;
+                panel_Move.IsEnabled = enabled;
+                panel_Pneu.IsEnabled = enabled;
+                panel_Misc.IsEnabled = enabled;
+                panel_Image.IsEnabled = enabled;
+                panel_Sequence.IsEnabled = enabled;
+                panel_Conv.IsEnabled = enabled;
+
+                if (enabled)
+                {
+                  panel_Conv.IsEnabled = SERIALPORT_BELT.IsOpen;
+
+                }
+
+                bool seq_vis = !Seq_Recording;
+
+                btn_RecordScript.IsEnabled = !Seq_Executing;
+                btn_SelectScript.IsEnabled = seq_vis;
+                btn_RunScript.IsEnabled = seq_vis;
+                btn_ClearScript.IsEnabled = seq_vis;
+                txt_NewScript.IsEnabled = seq_vis;
+                list_Sequence.IsEnabled = seq_vis;
+                btn_NewScript.IsEnabled = seq_vis;
+
                 btn_Connect.IsEnabled = true;
+                btn_EmergencyStop.IsEnabled = true;
 
                 this.Cursor = null;
             });

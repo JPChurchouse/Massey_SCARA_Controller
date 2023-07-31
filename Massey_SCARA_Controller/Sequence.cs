@@ -109,15 +109,19 @@ namespace Massey_SCARA_Controller
       }
     }
 
+    private bool Seq_Recording = false;
+    private bool Seq_Executing = false;
+
     private void RecordThisStep(string command)
     {
-      if (!Recording) return;
+      if (!Seq_Recording) return;
       scriptHandler.Append(command);
       UpdateScriptPanel();
     }
 
     private async Task SendCommandList(List<string> list)
     {
+      Seq_Executing = true;
       Ui_SetControlsEnabled(false);
 
       foreach (var step in list)
@@ -133,9 +137,10 @@ namespace Massey_SCARA_Controller
           PORT_SCARA_Send(step);
           await Task.Delay(500);
         }
+        if (!Seq_Executing) return;
       }
-
-      Ui_SetControlsEnabled(true);
+      PORT_SCARA_Send("DING,SEQDONE0");
+      PORT_SCARA_Send("DING,SEQDONE1");
       return;
     }
 
@@ -146,6 +151,12 @@ namespace Massey_SCARA_Controller
       {
         list_Sequence.Items.Add(item);
       }
+    }
+
+    private void SequenceEnd()
+    {
+      Seq_Executing = false;
+      Ui_SetControlsEnabled(true);
     }
   }
 }

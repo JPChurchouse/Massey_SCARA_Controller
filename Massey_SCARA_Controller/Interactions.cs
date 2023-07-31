@@ -55,7 +55,8 @@ namespace Massey_SCARA_Controller
     }
 
     private void btn_Stop_Click(object sender, RoutedEventArgs e) 
-    { 
+    {
+      LogMessage("E-STOP - Terminating", MsgType.ALT);
       Disconnect();
     }
     
@@ -160,24 +161,25 @@ namespace Massey_SCARA_Controller
     #region Script functionality
     private void list_Sequence_MouseDoubleClick(object sender, MouseButtonEventArgs e)
     {
-      
+      PORT_SCARA_Send(list_Sequence.SelectedItem.ToString());
     }
 
-    private bool Recording = false;
+    
     private void btn_RecordScript_Click(object sender, RoutedEventArgs e)
     {
       if (btn_RecordScript.Content.ToString().Contains("Record"))
       {
         btn_RecordScript.Content = "Stop";
-        Recording = true;
+        Seq_Recording = true;
       }
       else
       {
         btn_RecordScript.Content = "Record";
-        Recording = false;
+        Seq_Recording = false;
         scriptHandler.Export();
         UpdateScriptPanel();
       }
+      Ui_SetControlsEnabled(true);
     }
 
     private void btn_ClearScript_Click(object sender, RoutedEventArgs e)

@@ -67,6 +67,10 @@ namespace Massey_SCARA_Controller
           LockoutEnd();
           return;
         }// Don't show the user the ECHO rx cmds
+        else if (data.Contains("SEQDONE"))
+        {
+          SequenceEnd();
+        }
 
         LogMessage(data, MsgType.RXD);
       }
@@ -174,7 +178,6 @@ namespace Massey_SCARA_Controller
                 port_SCARA_connected = SERIALPORT_SCARA.IsOpen;
                 LogMessage($"SCARA connection {(port_SCARA_connected ? "OPEN" : "FAILED")}", MsgType.SYS);
               }
-
             }
 
             if (!port_BELT_connected)
@@ -190,10 +193,9 @@ namespace Massey_SCARA_Controller
                 port_BELT_connected = SERIALPORT_BELT.IsOpen;
                 LogMessage($"BELT connection {(port_BELT_connected ? "OPEN" : "FAILED")}", MsgType.SYS);
               }
-
-              if (port_SCARA_connected && port_BELT_connected) break;
-
             }
+
+            if (port_SCARA_connected && port_BELT_connected) break;
           }
         }
         catch (Exception ex) { Log.Error(ex.Message); }
@@ -223,6 +225,7 @@ namespace Massey_SCARA_Controller
           // Home all axies
           PORT_SCARA_Send("ECHO,1");
           PORT_SCARA_Send("HOME");
+          PORT_SCARA_Send($"SPEEDSET,{Settings.Default.spd_Vel},{Settings.Default.spd_Acc}");
         }
         else
         {
@@ -239,42 +242,45 @@ namespace Massey_SCARA_Controller
   // Disconnect Serial Port
   private async void Disconnect()
   {
-    try
-    {
-      if (SERIALPORT_SCARA.IsOpen)
+      Seq_Executing = false;
+      Seq_Recording = false;
+
+      try
       {
-        LogMessage("Closing Serial Port", MsgType.SYS);
+        if (SERIALPORT_SCARA.IsOpen)
+        {
+          LogMessage("Closing Serial Port", MsgType.SYS);
 
-        PORT_SCARA_Send("STOP");
-        await Task.Delay(100);
-        PORT_SCARA_Send("CLEAR");
-        await Task.Delay(100);
+          PORT_SCARA_Send("STOP");
+          await Task.Delay(100);
+          PORT_SCARA_Send("CLEAR");
+          await Task.Delay(100);
 
-        SERIALPORT_SCARA.Close();
+          SERIALPORT_SCARA.Close();
 
-        LogMessage("Serial Port closed", MsgType.SYS);
+          LogMessage("Serial Port closed", MsgType.SYS);
+        }
+        else
+        {
+          LogMessage("Serial Port already closed", MsgType.SYS);
+        }
       }
-      else
+      catch (Exception exc)
       {
-        LogMessage("Serial Port already closed", MsgType.SYS);
+        Log.Error(exc.Message);
+        LogMessage("Error while closing Serial Port", MsgType.SYS);
       }
-    }
-    catch (Exception exc)
-    {
-      Log.Error(exc.Message);
-      LogMessage("Error while closing Serial Port", MsgType.SYS);
-    }
-    finally
-    {
-      await Task.Delay(500);
-      Ui_UpdateConnectionStatus();
-    }
+      finally
+      {
+        await Task.Delay(500);
+        Ui_UpdateConnectionStatus();
+      }
 
-    try
-    {
-      SERIALPORT_BELT.Close();
-    }
-    catch { }
+      try
+      {
+        SERIALPORT_BELT.Close();
+      }
+      catch { }
   }
 
   // Process sending data on the Serial Port
