@@ -1,7 +1,0 @@
-conveyor settings not working
-
-delay in berteweenall actions
-not openeing json into listview
-conveyor is indepenent of scara
-name of file in box
-create sequence folder
