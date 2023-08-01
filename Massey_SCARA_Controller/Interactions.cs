@@ -176,27 +176,26 @@ namespace Massey_SCARA_Controller
       {
         btn_RecordScript.Content = "Record";
         Seq_Recording = false;
-        scriptHandler.Export();
-        UpdateScriptPanel();
+        Seq_Export();
+        Seq_UpdatePanel();
       }
       Ui_SetControlsEnabled(true);
     }
 
     private void btn_ClearScript_Click(object sender, RoutedEventArgs e)
     {
-      scriptHandler.List.Clear();
-      UpdateScriptPanel();
+      Seq_List.Clear();
+      Seq_UpdatePanel();
     }
 
 
     private void btn_RunScript_Click(object sender, RoutedEventArgs e)
     {
-      _ = SendCommandList(scriptHandler.List);
+      _ = Seq_SendCommandList(Seq_List);
     }
     private void btn_SelectScript_Click(object sender, RoutedEventArgs e)
     {
-      scriptHandler.SelectFile();
-      UpdateScriptPanel();
+      Seq_SelectFile();
     }
 
     private void list_Sequence_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
@@ -205,8 +204,7 @@ namespace Massey_SCARA_Controller
 
     private void btn_NewScript_Click(object sender, RoutedEventArgs e)
     {
-      scriptHandler.MakeNew(txt_NewScript.Text);
-      UpdateScriptPanel();
+      Seq_MakeNew(txt_NewScript.Text);
     }
 
 

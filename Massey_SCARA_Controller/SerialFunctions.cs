@@ -69,7 +69,7 @@ namespace Massey_SCARA_Controller
         }// Don't show the user the ECHO rx cmds
         else if (data.Contains("SEQDONE"))
         {
-          SequenceEnd();
+          Seq_End();
         }
         else if (data.Contains("DONE"))
         {
@@ -228,9 +228,9 @@ namespace Massey_SCARA_Controller
 
           // Show warning
           LogMessage("WARNING - SCARA ACTIVE", MsgType.ALT);
-          MessageBox.Show(
-        "The SCARA is about to become active. Press \"OK\" to proceed when the area is safe.",
-        "⚠️ WARNING ⚠️");
+            MessageBox.Show(
+            "The SCARA is about to become active. Press \"OK\" to proceed when the area is safe.",
+            "⚠️ WARNING ⚠️");
 
           player.Close();
 
@@ -238,6 +238,7 @@ namespace Massey_SCARA_Controller
           PORT_SCARA_Send("ECHO,1");
           PORT_SCARA_Send("HOME");
           PORT_SCARA_Send($"SPEEDSET,{Settings.Default.spd_Vel},{Settings.Default.spd_Acc}");
+          PORT_SCARA_Send("DING,READY");
         }
         else
         {
@@ -315,7 +316,7 @@ namespace Massey_SCARA_Controller
         {
           SERIALPORT_SCARA.WriteLine(data);
           LockoutStart();
-          RecordThisStep(data);
+          Seq_RecordThisStep(data);
         }
         catch (Exception ex)
         {
@@ -346,7 +347,7 @@ namespace Massey_SCARA_Controller
         {
           SERIALPORT_BELT.WriteLine(data);
           LockoutStart();
-          RecordThisStep(data);
+          Seq_RecordThisStep(data);
         }
         catch (Exception ex)
         {

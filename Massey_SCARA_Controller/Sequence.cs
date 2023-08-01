@@ -19,110 +19,101 @@ namespace Massey_SCARA_Controller
 {
   public partial class MainWindow : Window
   {
+    private string Seq_FilePath = Environment.CurrentDirectory + "\\sequences\\my_sequence.txt";
+    public List<string> Seq_List = new List<string>();
 
-    private ScriptHandler scriptHandler = new ScriptHandler(Environment.CurrentDirectory + "\\sequences\\my_sequence.json");
-    private class ScriptHandler
+
+    public void Seq_Import(string filepath = "")
     {
-      public ScriptHandler() { }
-      public ScriptHandler(string filepath)
+      if (filepath != "") Seq_FilePath = filepath;
+      if (!File.Exists(Seq_FilePath)) return;
+
+      string info = File.ReadAllText(Seq_FilePath);
+      if (info == null) return;
+
+      Seq_List.Clear();
+
+      var lines = File.ReadLines(Seq_FilePath);
+      foreach (var line in lines)
       {
-        this.FilePath = filepath;
-        Import();
+        Seq_List.Add(line);
       }
 
-      public void Import(string filepath = "")
+      Seq_UpdatePanel();
+    }
+
+    public void Seq_Export(string filepath = "")
+    {
+      if (!Directory.Exists(Environment.CurrentDirectory + "\\sequences"))
+        Directory.CreateDirectory(Environment.CurrentDirectory + "\\sequences");
+
+      if (filepath != "") Seq_FilePath = filepath;
+
+      string info = "";
+      foreach (var item in Seq_List)
       {
-        if (filepath != "") FilePath = filepath;
-        if (!File.Exists(FilePath)) return;
+        info += item + "\n";
+      }
+      File.WriteAllText(Seq_FilePath, info);
+    }
+    public void Seq_SelectFile()
+    {
+      OpenFileDialog window = new OpenFileDialog();
+      window.Title = "Select File";
+      window.InitialDirectory = Directory.GetCurrentDirectory() + "\\sequences\\";
+      window.Filter = "Sequence Files|*.json|All Files|*.*";
+      window.FilterIndex = 2;
+      window.ShowDialog();
+      if (window.FileName != "")
+      {
+        Seq_FilePath = window.FileName;
+        Seq_Import();
+      }
+      else { }
 
-        string json = File.ReadAllText(FilePath);
-        if (json == null) return;
+      Seq_UpdatePanel();
+    }
 
-        ScriptHandler info;
+      
+    public void Seq_MakeNew(string name)
+    {
+      Seq_Export();
+      Seq_List.Clear();
+      Seq_FilePath = Environment.CurrentDirectory + $"\\sequences\\{name}.txt";
 
-        try
+      Seq_UpdatePanel();
+    }
+
+    public void Seq_Append(string command)
+    {
+      if (command.Contains("MOVE"))
+      {
+        int end = Seq_List.Count - 1;
+        if (Seq_List[end].Contains("MOVE"))
         {
-          info = JsonConvert.DeserializeObject<ScriptHandler>(json);
-          if (info == null) throw new Exception();
-        }
-        catch
-        {
+          Seq_List[end] = command;
           return;
         }
-
-        this.List.Clear();
-        this.List = info.List;
       }
 
-      public void Export(string filepath = "")
-      {
-        if (filepath != "") FilePath = filepath;
+      Seq_List.Add(command);
 
-        string json = JsonConvert.SerializeObject(this);
-        File.WriteAllText(FilePath, json);
-      }
-      public void SelectFile()
-      {
-        OpenFileDialog window = new OpenFileDialog();
-        window.Title = "Select File";
-        window.InitialDirectory = Directory.GetCurrentDirectory() + "\\sequences\\";
-        window.Filter = "Sequence Files|*.json|All Files|*.*";
-        window.FilterIndex = 2;
-        window.ShowDialog();
-        if (window.FileName != "")
-        {
-          this.FilePath = window.FileName;
-          Import();
-        }
-        else { }
-      }
-
-      private string FilePath = "";
-      public List<string> List = new List<string>();
-      public string[] GetMachineList()
-      {
-        List<string> list = new List<string>();
-        foreach (var step in this.List)
-        {
-          list.Add(step);
-        }
-        return list.ToArray();
-      }
-      public void MakeNew(string name)
-      {
-        Export();
-        List.Clear();
-        FilePath = Environment.CurrentDirectory + $"\\sequences\\{name}.json";
-      }
-
-      public void Append(string command)
-      {
-        if (command.Contains("MOVE"))
-        {
-          int end = List.Count - 1;
-          if (List[end].Contains("MOVE"))
-          {
-            List[end] = command;
-            return;
-          }
-        }
-
-        this.List.Add(command);
-      }
+      Seq_UpdatePanel();
     }
 
     private bool Seq_Recording = false;
     private bool Seq_Executing = false;
     private bool Seq_Waiting = false;
 
-    private void RecordThisStep(string command)
+    private void Seq_RecordThisStep(string command)
     {
       if (!Seq_Recording) return;
-      scriptHandler.Append(command);
-      UpdateScriptPanel();
+      Seq_Append(command);
+
+      Seq_UpdatePanel();
     }
 
-    private async Task SendCommandList(List<string> list)
+    private async Task Seq_SendCommandList(List<string> list)
     {
       Seq_Executing = true;
       Ui_SetControlsEnabled(false);
@@ -130,6 +121,8 @@ namespace Massey_SCARA_Controller
       foreach (var step in list)
       {
         Seq_Waiting = true;
+
+        step.Replace("\n", "").Replace("\r", "");
 
         // Belt command
         if (
@@ -159,20 +152,22 @@ namespace Massey_SCARA_Controller
         continue;
       }
 
-      SequenceEnd();
+      Seq_End();
       return;
     }
 
-    private void UpdateScriptPanel()
+    private void Seq_UpdatePanel()
     {
+      txt_NewScript.Text = Seq_FilePath.Substring(Seq_FilePath.LastIndexOf("\\")+1).Replace(".txt", "");
+
       list_Sequence.Items.Clear();
-      foreach(string item in scriptHandler.List)
+      foreach(string item in Seq_List)
       {
         list_Sequence.Items.Add(item);
       }
     }
 
-    private void SequenceEnd()
+    private void Seq_End()
     {
       Seq_Executing = false;
       Ui_SetControlsEnabled(true);
