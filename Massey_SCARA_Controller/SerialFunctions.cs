@@ -71,6 +71,10 @@ namespace Massey_SCARA_Controller
         {
           SequenceEnd();
         }
+        else if (data.Contains("DONE"))
+        {
+          Seq_Waiting = false;
+        }
 
         LogMessage(data, MsgType.RXD);
       }
@@ -105,6 +109,10 @@ namespace Massey_SCARA_Controller
         {
           LockoutEnd();
         }// Don't show the user the ECHO rx cmds
+        else if (data.Contains("DONE"))
+        {
+          Seq_Waiting = false;
+        }
 
         LogMessage(data, MsgType.RXD);
       }

@@ -83,5 +83,8 @@
     <Setting Name="conv_Dist" Type="System.UInt16" Scope="User">
       <Value Profile="(Default)">80</Value>
     </Setting>
+    <Setting Name="seq_Delay" Type="System.UInt16" Scope="User">
+      <Value Profile="(Default)">3000</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

@@ -346,5 +346,17 @@ namespace Massey_SCARA_Controller.Properties {
                 this["conv_Dist"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("3000")]
+        public ushort seq_Delay {
+            get {
+                return ((ushort)(this["seq_Delay"]));
+            }
+            set {
+                this["seq_Delay"] = value;
+            }
+        }
     }
 }

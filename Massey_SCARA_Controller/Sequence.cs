@@ -13,6 +13,7 @@ using Microsoft.Win32;
 using System.Windows.Controls;
 using Serilog;
 using System.Xml.Serialization;
+using Massey_SCARA_Controller.Properties;
 
 namespace Massey_SCARA_Controller
 {
@@ -112,6 +113,7 @@ namespace Massey_SCARA_Controller
 
     private bool Seq_Recording = false;
     private bool Seq_Executing = false;
+    private bool Seq_Waiting = false;
 
     private void RecordThisStep(string command)
     {
@@ -127,24 +129,37 @@ namespace Massey_SCARA_Controller
 
       foreach (var step in list)
       {
+        Seq_Waiting = true;
+
+        // Belt command
         if (
-          step.Contains(Properties.Settings.Default.conv_For) || 
-          step.Contains(Properties.Settings.Default.conv_Rev))
+          step.Contains(Settings.Default.conv_For) || 
+          step.Contains(Settings.Default.conv_Rev))
         {
           PORT_BELT_Send(step);
         }
+
+        // SCARA command
         else
         {
           PORT_SCARA_Send(step);
-          await Task.Delay(500);
+          PORT_SCARA_Send("DING,DONE");
         }
-        if (!Seq_Executing) return;
-        await Task.Delay(100);
-        PORT_SCARA_Send("WAIT,1000"); 
-        await Task.Delay(100);
+
+        // Delay
+        int timeout = Settings.Default.seq_Delay;
+        int increment = 10;
+        for (int i = 0; i < timeout; i+= increment)
+        {
+          if (!Seq_Executing) return; // Sequence terminated elsewhere
+          if (!Seq_Waiting) break;  // Sequence timeout cleared elsewhere
+
+          await Task.Delay(increment);
+        }
+        continue;
       }
-      PORT_SCARA_Send("DING,SEQDONE0");
-      PORT_SCARA_Send("DING,SEQDONE1");
+
+      SequenceEnd();
       return;
     }
 

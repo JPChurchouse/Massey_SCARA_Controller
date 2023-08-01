@@ -41,7 +41,7 @@ namespace Massey_SCARA_Controller
       // Piston
       //txt_PistonInactive.Text = Settings.Default.air_UP;
       //txt_PistonActive.Text = Settings.Default.air_DOWN;
-      
+
       if (!Validate(txt_PistonDelay.Text, 0, 10000))
       {
         txt_PistonDelay.Text = Settings.Default.air_DELAY_P.ToString();
@@ -116,25 +116,40 @@ namespace Massey_SCARA_Controller
       // Speed
       if (!Validate(txt_Speed.Text, 1, 100))
       {
-       txt_Speed.Text = Settings.Default.spd_Vel.ToString();
-       changes++;
+        txt_Speed.Text = Settings.Default.spd_Vel.ToString();
+        changes++;
       }
       if (!Validate(txt_Acceleration.Text, 1, 100))
       {
-       txt_Acceleration.Text = Settings.Default.spd_Acc.ToString();
-       changes++;
+        txt_Acceleration.Text = Settings.Default.spd_Acc.ToString();
+        changes++;
       }
 
 
-   if (MessageBox.Show(
-        (changes > 0 ? $"{changes} settings were outside of parameters and reverted.\n":"") +
-        "Are you sure you want to save these settings?\n" +
-        "The manufacturer takes no responsibility for any dammages as a result of changed settings.",
-        "Save settings?",
-        MessageBoxButton.YesNoCancel,
-        MessageBoxImage.Question,
-        MessageBoxResult.Cancel)
-        != MessageBoxResult.Yes)
+
+      if (!Validate(txt_ConvDis.Text, 1, 1000))
+      {
+        txt_ConvDis.Text = Settings.Default.conv_Dist.ToString();
+        changes++;
+      }
+      if (!Validate(txt_SeqDel.Text, 1, 1000))
+      {
+        txt_SeqDel.Text = Settings.Default.seq_Delay.ToString();
+        changes++;
+      }
+      
+
+
+
+      if (MessageBox.Show(
+           (changes > 0 ? $"{changes} settings were outside of parameters and reverted.\n" : "") +
+           "Are you sure you want to save these settings?\n" +
+           "The manufacturer takes no responsibility for any dammages as a result of changed settings.",
+           "Save settings?",
+           MessageBoxButton.YesNoCancel,
+           MessageBoxImage.Question,
+           MessageBoxResult.Cancel)
+           != MessageBoxResult.Yes)
       {
         return;
       }
@@ -172,47 +187,59 @@ namespace Massey_SCARA_Controller
       txt_Speed.Text = Settings.Default.spd_Vel.ToString();
       txt_Acceleration.Text = Settings.Default.spd_Acc.ToString();
 
+      // Conveyor
+      txt_ConvFor.Text = Settings.Default.conv_For.ToString();
+      txt_ConvRev.Text = Settings.Default.conv_Rev.ToString();
+      txt_ConvDis.Text = Settings.Default.conv_Dist.ToString();
+
       // Misc
       chk_Alarm.IsChecked = Settings.Default.alarm;
+      txt_SeqDel.Text = Settings.Default.seq_Delay.ToString();
     }
 
-    private void UiToSettings() 
+    private void UiToSettings()
     {
       try
       {
         // Piston
-        Settings.Default.air_UP   = txt_PistonInactive.Text;
-        Settings.Default.air_DOWN  = txt_PistonActive.Text;
+        Settings.Default.air_UP = txt_PistonInactive.Text;
+        Settings.Default.air_DOWN = txt_PistonActive.Text;
         Settings.Default.air_DELAY_P = StoI(txt_PistonDelay.Text);
 
         // Gripper
-        Settings.Default.air_OPEN  = txt_GripperInactive.Text;
-        Settings.Default.air_CLOSE  = txt_GripperActive.Text;
+        Settings.Default.air_OPEN = txt_GripperInactive.Text;
+        Settings.Default.air_CLOSE = txt_GripperActive.Text;
         Settings.Default.air_DELAY_G = StoI(txt_GripperDelay.Text);
 
         // Max
-        Settings.Default.max_W   = StoI(txt_MaxW.Text);
-        Settings.Default.max_X   = StoI(txt_MaxX.Text);
-        Settings.Default.max_Y   = StoI(txt_MaxY.Text);
+        Settings.Default.max_W = StoI(txt_MaxW.Text);
+        Settings.Default.max_X = StoI(txt_MaxX.Text);
+        Settings.Default.max_Y = StoI(txt_MaxY.Text);
 
         // Min
-        Settings.Default.min_W   = StoI(txt_MinW.Text);
-        Settings.Default.min_X   = StoI(txt_MinX.Text);
-        Settings.Default.min_Y   = StoI(txt_MinY.Text);
+        Settings.Default.min_W = StoI(txt_MinW.Text);
+        Settings.Default.min_X = StoI(txt_MinX.Text);
+        Settings.Default.min_Y = StoI(txt_MinY.Text);
 
         // Serial
-        Settings.Default.ser_Baud  = StoI(txt_Baudrate.Text);
-        Settings.Default.ser_Tim  = StoI(txt_Timeout.Text);
-        Settings.Default.lockout  = StoI(txt_Lockout.Text);
+        Settings.Default.ser_Baud = StoI(txt_Baudrate.Text);
+        Settings.Default.ser_Tim = StoI(txt_Timeout.Text);
+        Settings.Default.lockout = StoI(txt_Lockout.Text);
 
         // Speed
         Settings.Default.spd_Vel = StoI(txt_Speed.Text);
         Settings.Default.spd_Acc = StoI(txt_Acceleration.Text);
 
+        // Conveyor
+        Settings.Default.conv_For = txt_ConvFor.Text;
+        Settings.Default.conv_Rev = txt_ConvRev.Text;
+        Settings.Default.conv_Dist = (ushort)StoI(txt_ConvDis.Text);
+
         // Misc
-        Settings.Default.alarm   = (bool)chk_Alarm.IsChecked;
+        Settings.Default.alarm = (bool)chk_Alarm.IsChecked;
+        Settings.Default.seq_Delay = (ushort)StoI(txt_SeqDel.Text);
       }
-      catch 
+      catch
       {
         MessageBox.Show("Error", "Unable to save one or more settings!");
       }
@@ -228,20 +255,20 @@ namespace Massey_SCARA_Controller
       if (Int32.TryParse(s, out int i)) return i;
       else throw new Exception("Couldn't convert");
     }
-  
+
     private bool Validate(string s, int min, int max)
     {
       try
       {
         // Test for null
-        if (s == null) throw new ArgumentNullException ();
+        if (s == null) throw new ArgumentNullException();
 
         // Test for NaN
         if (Int32.TryParse(s, out int i))
         {
           // Test for OutOfBounds
           if (i > max || i < min) throw new ArgumentOutOfRangeException();
-          
+
           // Validated
           return true;
         }
