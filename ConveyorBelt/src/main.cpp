@@ -7,10 +7,10 @@
 void ProcessCommand(String);
 // Conveyor belt globals
 const uint8_t   pin_conv_pulse = 3; // PUL- pin
-const uint8_t   pin_conv_dir = 2;   // DIR- pin
+const uint8_t   pin_conv_dir = 6;   // DIR- pin
 const uint8_t   conv_dir = 1;       // Set Direction
 uint32_t conv_count = 0;
-uint16_t conv_period = 200;
+uint16_t conv_period = 100;
 bool conv_reverse = false;
 void ISR_DriveBelt();
 
@@ -26,6 +26,10 @@ void setup()
   pinMode (pin_conv_pulse, OUTPUT);     // Pulse pin as output
   pinMode (pin_conv_dir, OUTPUT);       // Direction pin as output
   digitalWrite(pin_conv_dir,conv_dir);  // Direction pin write high
+
+  //ENABLE
+  pinMode(8,OUTPUT);
+  digitalWrite(8,HIGH);
   
   Timer1.initialize(conv_period);           // Init conveyor timer with garbage
   Timer1.attachInterrupt(ISR_DriveBelt);// Attatch ISR

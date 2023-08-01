@@ -71,6 +71,7 @@ namespace Massey_SCARA_Controller
         if (window.FileName != "")
         {
           this.FilePath = window.FileName;
+          Import();
         }
         else { }
       }
@@ -138,6 +139,9 @@ namespace Massey_SCARA_Controller
           await Task.Delay(500);
         }
         if (!Seq_Executing) return;
+        await Task.Delay(100);
+        PORT_SCARA_Send("WAIT,1000"); 
+        await Task.Delay(100);
       }
       PORT_SCARA_Send("DING,SEQDONE0");
       PORT_SCARA_Send("DING,SEQDONE1");

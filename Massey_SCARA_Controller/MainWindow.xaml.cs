@@ -107,7 +107,7 @@ namespace Massey_SCARA_Controller
 
         // Sequence modules
         bool seq_vis = !Seq_Recording;
-        btn_RecordScript.IsEnabled = seq_vis;
+        btn_RecordScript.IsEnabled = enabled;
         btn_SelectScript.IsEnabled = seq_vis;
         btn_RunScript.IsEnabled = seq_vis;
         btn_ClearScript.IsEnabled = seq_vis;
