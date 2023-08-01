@@ -19,8 +19,8 @@ namespace Massey_SCARA_Controller
     private SerialPort SERIALPORT_SCARA = new SerialPort();
     private SerialPort SERIALPORT_BELT = new SerialPort();
 
-  // Initalise serial ports
-  private void InitSerial()
+    // Initalise serial ports
+    private void InitSerial()
     {
       SERIALPORT_SCARA.RtsEnable = true;
       SERIALPORT_SCARA.DtrEnable = true;
@@ -41,10 +41,10 @@ namespace Massey_SCARA_Controller
       SERIALPORT_BELT.PortName = "COM0";
       SERIALPORT_BELT.DataReceived += SERIALPORT_BELT_DataReceived;
       SERIALPORT_BELT.ErrorReceived += SERIALPORT_BELT_ErrorReceived;
-  }
-  #region SCARA PORT
-  // Serial Port error handler
-  private void SERIALPORT_SCARA_ErrorReceived(object sender, SerialErrorReceivedEventArgs e)
+    }
+    #region SCARA PORT
+    // Serial Port error handler
+    private void SERIALPORT_SCARA_ErrorReceived(object sender, SerialErrorReceivedEventArgs e)
     {
       LogMessage("Serial Port Error", MsgType.ALT);
       Ui_UpdateConnectionStatus();
@@ -56,13 +56,13 @@ namespace Massey_SCARA_Controller
       try
       {
         if (SERIALPORT_SCARA.BytesToRead == 0) return;
-      
+
         string data = SERIALPORT_SCARA.ReadLine();
         data = data.Replace("\r", "");
         data = data.Replace("\n", "");
         Log.Information($"Received: \"{data}\"");
 
-        if (data.Contains("RECEIVED")) 
+        if (data.Contains("RECEIVED"))
         {
           LockoutEnd();
           return;
@@ -80,51 +80,51 @@ namespace Massey_SCARA_Controller
       }
     }
 
-  // Serial Port error handler
-  private void SERIALPORT_BELT_ErrorReceived(object sender, SerialErrorReceivedEventArgs e)
-  {
-   LogMessage("Serial Port Error", MsgType.ALT);
-   Ui_UpdateConnectionStatus();
-  }
-  #endregion
-  #region BELT PORT
-
-  // Serial Port RX handler
-  private void SERIALPORT_BELT_DataReceived(object sender, SerialDataReceivedEventArgs e)
-  {
-   try
-   {
-    if (SERIALPORT_BELT.BytesToRead == 0) return;
-
-    string data = SERIALPORT_BELT.ReadLine();
-    data = data.Replace("\r", "");
-    data = data.Replace("\n", "");
-    Log.Information($"Received: \"{data}\"");
-
-    if (data.Contains("RECEIVED"))
+    // Serial Port error handler
+    private void SERIALPORT_BELT_ErrorReceived(object sender, SerialErrorReceivedEventArgs e)
     {
-     LockoutEnd();
-    }// Don't show the user the ECHO rx cmds
+      LogMessage("Serial Port Error", MsgType.ALT);
+      Ui_UpdateConnectionStatus();
+    }
+    #endregion
+    #region BELT PORT
 
-    LogMessage(data, MsgType.RXD);
-   }
-   catch (Exception exc)
-   {
-    Log.Debug($"Failed to read serial: {exc.ToString()}");
-   }
-  }
-  #endregion
+    // Serial Port RX handler
+    private void SERIALPORT_BELT_DataReceived(object sender, SerialDataReceivedEventArgs e)
+    {
+      try
+      {
+        if (SERIALPORT_BELT.BytesToRead == 0) return;
 
-  // Scan for the right device and connect to it
-  private void ScanAndConnect()
+        string data = SERIALPORT_BELT.ReadLine();
+        data = data.Replace("\r", "");
+        data = data.Replace("\n", "");
+        Log.Information($"Received: \"{data}\"");
+
+        if (data.Contains("RECEIVED"))
+        {
+          LockoutEnd();
+        }// Don't show the user the ECHO rx cmds
+
+        LogMessage(data, MsgType.RXD);
+      }
+      catch (Exception exc)
+      {
+        Log.Debug($"Failed to read serial: {exc.ToString()}");
+      }
+    }
+    #endregion
+
+    // Scan for the right device and connect to it
+    private void ScanAndConnect()
     {
       this.Dispatcher.Invoke(() =>
       {
         bool port_SCARA_connected = SERIALPORT_SCARA.IsOpen;
         bool port_BELT_connected = SERIALPORT_BELT.IsOpen;
 
-         // If connected, return
-         if (port_SCARA_connected && port_BELT_connected) return;
+        // If connected, return
+        if (port_SCARA_connected && port_BELT_connected) return;
 
         // Update labels
         LogMessage("Setting up Serial PortS", MsgType.SYS);
@@ -140,12 +140,12 @@ namespace Massey_SCARA_Controller
         SERIALPORT_SCARA.WriteTimeout = Settings.Default.ser_Tim;
         SERIALPORT_SCARA.BaudRate = Settings.Default.ser_Baud;
 
-       SERIALPORT_BELT.ReadTimeout = Settings.Default.ser_Tim;
-       SERIALPORT_BELT.WriteTimeout = Settings.Default.ser_Tim;
-       SERIALPORT_BELT.BaudRate = Settings.Default.ser_Baud;
+        SERIALPORT_BELT.ReadTimeout = Settings.Default.ser_Tim;
+        SERIALPORT_BELT.WriteTimeout = Settings.Default.ser_Tim;
+        SERIALPORT_BELT.BaudRate = Settings.Default.ser_Baud;
 
-       // Connect to ports
-       try
+        // Connect to ports
+        try
         {
           ManagementObjectSearcher searcher = new ManagementObjectSearcher("Select * From Win32_PnPEntity WHERE Caption LIKE '% (COM%'");
           ManagementObjectCollection devices = searcher.Get();
@@ -161,7 +161,7 @@ namespace Massey_SCARA_Controller
               if (caption == null) throw new Exception();
             }
             catch { continue; }
-            
+
             Log.Debug($"Found device: {caption}");
 
 
@@ -204,23 +204,27 @@ namespace Massey_SCARA_Controller
         if (port_SCARA_connected)
         {
           Log.Debug($"Baudrate: {SERIALPORT_SCARA.BaudRate}");
-          /*
-              // Play alarm
+
+          // Play alarm
           MediaPlayer player = new MediaPlayer();
-          if (Settings.Default.alarm) 
+          try
           {
-            player.Open(new Uri("\\alarm.mp3"));
-            player.Play();
+            if (Settings.Default.alarm)
+            {
+              player.Open(new Uri("\\alarm.mp3"));
+              player.Play();
+            }
           }
-          */
+          catch { }
+
 
           // Show warning
           LogMessage("WARNING - SCARA ACTIVE", MsgType.ALT);
           MessageBox.Show(
-            "The SCARA is about to become active. Press \"OK\" to proceed when the area is safe.",
-            "⚠️ WARNING ⚠️");
+        "The SCARA is about to become active. Press \"OK\" to proceed when the area is safe.",
+        "⚠️ WARNING ⚠️");
 
-          //player.Close();
+          player.Close();
 
           // Home all axies
           PORT_SCARA_Send("ECHO,1");
@@ -239,9 +243,9 @@ namespace Massey_SCARA_Controller
       });
     }
 
-  // Disconnect Serial Port
-  private async void Disconnect()
-  {
+    // Disconnect Serial Port
+    private async void Disconnect()
+    {
       Seq_Executing = false;
       Seq_Recording = false;
 
@@ -281,73 +285,73 @@ namespace Massey_SCARA_Controller
         SERIALPORT_BELT.Close();
       }
       catch { }
-  }
-
-  // Process sending data on the Serial Port
-  private void PORT_SCARA_Send(string data)
-  {
-    if (!SERIALPORT_SCARA.IsOpen)
-    {
-      LogMessage("Connection error", MsgType.ALT);
     }
 
-    else if (data == null || data == "")
+    // Process sending data on the Serial Port
+    private void PORT_SCARA_Send(string data)
     {
-      LogMessage("Not content to send", MsgType.ALT);
-    }
-
-    else 
-    { 
-      LogMessage($"Sending: {data}", MsgType.TXD);
-      try
+      if (!SERIALPORT_SCARA.IsOpen)
       {
-        SERIALPORT_SCARA.WriteLine(data);
-        LockoutStart();
-        RecordThisStep(data);
+        LogMessage("Connection error", MsgType.ALT);
       }
-      catch (Exception ex)
+
+      else if (data == null || data == "")
       {
-        LogMessage("Unable to send command", MsgType.ALT);
-        Log.Error(ex.ToString());
+        LogMessage("Not content to send", MsgType.ALT);
       }
-    }
 
-    Ui_UpdateConnectionStatus();
-  }
-
-  private void PORT_BELT_Send(string data)
-  {
-    if (!SERIALPORT_BELT.IsOpen)
-    {
-      LogMessage("Connection error", MsgType.ALT);
-    }
-
-    else if (data == null || data == "")
-    {
-      LogMessage("Not content to send", MsgType.ALT);
-    }
-
-    else
-    {
-      LogMessage($"Sending: {data}", MsgType.TXD);
-      try
+      else
       {
-        SERIALPORT_BELT.WriteLine(data);
-        LockoutStart();
-        RecordThisStep(data);
+        LogMessage($"Sending: {data}", MsgType.TXD);
+        try
+        {
+          SERIALPORT_SCARA.WriteLine(data);
+          LockoutStart();
+          RecordThisStep(data);
         }
-      catch (Exception ex)
-      {
-        LogMessage("Unable to send command", MsgType.ALT);
-        Log.Error(ex.ToString());
+        catch (Exception ex)
+        {
+          LogMessage("Unable to send command", MsgType.ALT);
+          Log.Error(ex.ToString());
+        }
       }
+
+      Ui_UpdateConnectionStatus();
     }
 
-    Ui_UpdateConnectionStatus();
-  }
+    private void PORT_BELT_Send(string data)
+    {
+      if (!SERIALPORT_BELT.IsOpen)
+      {
+        LogMessage("Connection error", MsgType.ALT);
+      }
 
-  // Convert the COM Port message to a "COM x" string
-  private string ParsePortInfo(string info) { return info.Substring(info.LastIndexOf("(COM")).Replace("(", string.Empty).Replace(")", string.Empty); }
+      else if (data == null || data == "")
+      {
+        LogMessage("Not content to send", MsgType.ALT);
+      }
+
+      else
+      {
+        LogMessage($"Sending: {data}", MsgType.TXD);
+        try
+        {
+          SERIALPORT_BELT.WriteLine(data);
+          LockoutStart();
+          RecordThisStep(data);
+        }
+        catch (Exception ex)
+        {
+          LogMessage("Unable to send command", MsgType.ALT);
+          Log.Error(ex.ToString());
+        }
+      }
+
+      Ui_UpdateConnectionStatus();
+    }
+
+    // Convert the COM Port message to a "COM x" string
+    private string ParsePortInfo(string info) { return info.Substring(info.LastIndexOf("(COM")).Replace("(", string.Empty).Replace(")", string.Empty); }
 
 
     // LOCKOUT

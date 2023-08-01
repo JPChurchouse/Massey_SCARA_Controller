@@ -9,7 +9,9 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="alarm.mp3" />
     <None Remove="icon.ico" />
+    <None Remove="Massey-University.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -22,7 +24,13 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="alarm.mp3">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="icon.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Massey-University.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>
@@ -48,12 +56,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="alarm.mp3">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Massey-University.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <None Update="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
