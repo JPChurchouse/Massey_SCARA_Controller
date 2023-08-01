@@ -51,7 +51,7 @@ void ISR_DriveBelt()
 
   digitalWrite(
     pin_conv_dir,
-    conv_reverse ? 0 : 1);
+    conv_reverse ? 1 : 0);
 
   digitalWrite(
     pin_conv_pulse, 

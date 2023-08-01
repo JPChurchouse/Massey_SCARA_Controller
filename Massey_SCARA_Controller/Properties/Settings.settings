@@ -36,19 +36,19 @@
       <Value Profile="(Default)">180</Value>
     </Setting>
     <Setting Name="max_X" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">100</Value>
+      <Value Profile="(Default)">40</Value>
     </Setting>
     <Setting Name="max_Y" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">100</Value>
+      <Value Profile="(Default)">60</Value>
     </Setting>
     <Setting Name="min_W" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">-180</Value>
     </Setting>
     <Setting Name="min_X" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">0</Value>
+      <Value Profile="(Default)">-100</Value>
     </Setting>
     <Setting Name="min_Y" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">0</Value>
+      <Value Profile="(Default)">-80</Value>
     </Setting>
     <Setting Name="window_Height" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">450</Value>
@@ -69,10 +69,10 @@
       <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="spd_Vel" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">100</Value>
+      <Value Profile="(Default)">80</Value>
     </Setting>
     <Setting Name="spd_Acc" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">100</Value>
+      <Value Profile="(Default)">80</Value>
     </Setting>
     <Setting Name="conv_For" Type="System.String" Scope="User">
       <Value Profile="(Default)">FOR</Value>
@@ -81,7 +81,7 @@
       <Value Profile="(Default)">REV</Value>
     </Setting>
     <Setting Name="conv_Dist" Type="System.UInt16" Scope="User">
-      <Value Profile="(Default)">80</Value>
+      <Value Profile="(Default)">100</Value>
     </Setting>
     <Setting Name="seq_Delay" Type="System.UInt16" Scope="User">
       <Value Profile="(Default)">3000</Value>
